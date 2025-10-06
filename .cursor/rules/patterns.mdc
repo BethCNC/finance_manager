@@ -1,0 +1,604 @@
+# Code Patterns & Snippets Reference
+
+## Component Patterns
+
+### Basic Functional Component
+```typescript
+import React from 'react';
+
+interface ComponentNameProps {
+  title: string;
+  value: number;
+  onAction?: () => void;
+}
+
+const ComponentName = ({title, value, onAction}: ComponentNameProps) => {
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl p-6">
+      <h3 className="text-lg font-bold text-black mb-2">{title}</h3>
+      <p className="text-gray-700">{value}</p>
+      {onAction && (
+        <button onClick={onAction} className="mt-4 bg-black text-white px-4 py-2 rounded-lg">
+          Action
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default ComponentName;
+```
+
+### Component with State
+```typescript
+import {useState} from 'react';
+
+const ComponentWithState = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({name: '', amount: 0});
+
+  const handleSubmit = () => {
+    // Handle submission
+    setIsOpen(false);
+  };
+
+  return (
+    <div>
+      <button onClick={() => setIsOpen(true)}>Open</button>
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+          {/* Modal content */}
+        </div>
+      )}
+    </div>
+  );
+};
+```
+
+### Component with Data Fetching
+```typescript
+import {useState, useEffect} from 'react';
+
+interface DataType {
+  id: string;
+  name: string;
+}
+
+const DataComponent = () => {
+  const [data, setData] = useState<DataType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/endpoint');
+        const result = await response.json();
+        setData(result.data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return (
+    <div>
+      {data.map((item) => (
+        <div key={item.id}>{item.name}</div>
+      ))}
+    </div>
+  );
+};
+```
+
+## Custom Hooks
+
+### Data Fetching Hook Template
+```typescript
+import {useState, useEffect} from 'react';
+
+interface UseDataResult<T> {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+  refetch: () => void;
+}
+
+export const useData = <T,>(url: string): UseDataResult<T> => {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Failed to fetch');
+      const result = await response.json();
+      setData(result);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [url]);
+
+  return {data, loading, error, refetch: fetchData};
+};
+```
+
+### Auto-Refresh Hook
+```typescript
+import {useState, useEffect} from 'react';
+
+export const useAutoRefresh = <T,>(
+  fetchFn: () => Promise<T>,
+  interval: number = 30000
+) => {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const result = await fetchFn();
+        setData(result);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetch();
+    const timer = setInterval(fetch, interval);
+    return () => clearInterval(timer);
+  }, [fetchFn, interval]);
+
+  return {data, loading};
+};
+```
+
+## API Patterns
+
+### Notion Query Pattern
+```typescript
+import {Client} from '@notionhq/client';
+import type {VercelRequest, VercelResponse} from '@vercel/node';
+
+const notion = new Client({auth: process.env.NOTION_API_KEY});
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  try {
+    const response = await notion.databases.query({
+      database_id: process.env.DATABASE_ID!,
+      sorts: [{property: 'Date', direction: 'descending'}],
+      page_size: 20,
+    });
+
+    const data = response.results.map((page: any) => ({
+      id: page.id,
+      name: page.properties.Name?.title[0]?.plain_text || '',
+      amount: page.properties.Amount?.number || 0,
+      date: page.properties.Date?.date?.start || '',
+    }));
+
+    return res.status(200).json({data});
+  } catch (error: any) {
+    console.error('API Error:', error);
+    return res.status(500).json({error: error.message});
+  }
+}
+```
+
+### Create Notion Page Pattern
+```typescript
+await notion.pages.create({
+  parent: {database_id: DATABASE_ID},
+  properties: {
+    Name: {
+      title: [{text: {content: 'Transaction Name'}}]
+    },
+    Amount: {
+      number: 100
+    },
+    Date: {
+      date: {start: '2025-10-05'}
+    },
+    Type: {
+      select: {name: 'expense'}
+    }
+  }
+});
+```
+
+### Update Notion Page Pattern
+```typescript
+await notion.pages.update({
+  page_id: PAGE_ID,
+  properties: {
+    Amount: {number: 150},
+    Name: {title: [{text: {content: 'Updated Name'}}]}
+  }
+});
+```
+
+## Tailwind Patterns
+
+### Card Layouts
+```typescript
+// Simple card
+<div className="bg-white border border-gray-200 rounded-xl p-6">
+  Content
+</div>
+
+// Card with hover
+<div className="bg-white border border-gray-200 rounded-xl p-6 hover:border-black transition-all">
+  Content
+</div>
+
+// Gradient card (for AI sections)
+<div className="bg-gradient-to-br from-gray-900 to-black rounded-xl p-6 text-white">
+  Content
+</div>
+```
+
+### Button Styles
+```typescript
+// Primary button
+<button className="bg-black text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transition-all">
+  Action
+</button>
+
+// Secondary button
+<button className="bg-white text-black border border-gray-200 px-6 py-3 rounded-xl font-medium hover:border-black transition-all">
+  Action
+</button>
+
+// Icon button
+<button className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all">
+  <Icon size={20} className="text-black" />
+</button>
+```
+
+### Input Fields
+```typescript
+// Text input
+<input
+  type="text"
+  placeholder="Enter value..."
+  className="w-full bg-gray-50 text-black border border-gray-200 rounded-xl px-4 py-3 focus:border-black focus:outline-none"
+/>
+
+// Number input
+<input
+  type="number"
+  placeholder="0.00"
+  className="w-full bg-gray-50 text-black border border-gray-200 rounded-xl px-4 py-3 focus:border-black focus:outline-none"
+/>
+
+// Date input
+<input
+  type="date"
+  className="w-full bg-gray-50 text-black border border-gray-200 rounded-xl px-4 py-3 focus:border-black focus:outline-none"
+/>
+```
+
+### Modal Patterns
+```typescript
+// Full screen overlay
+<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <div className="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
+    {/* Modal content */}
+  </div>
+</div>
+
+// Slide-in panel (right side)
+<div className="fixed inset-y-0 right-0 w-96 bg-white border-l border-gray-200 p-6 z-50">
+  {/* Panel content */}
+</div>
+```
+
+### Grid Layouts
+```typescript
+// Responsive grid
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  {items.map((item) => <Card key={item.id} {...item} />)}
+</div>
+
+// Sidebar + main content
+<div className="flex">
+  <aside className="w-64 border-r border-gray-200">Sidebar</aside>
+  <main className="flex-1 p-8">Content</main>
+</div>
+```
+
+## TypeScript Patterns
+
+### Interface Definitions
+```typescript
+// Props interface
+interface ComponentProps {
+  title: string;
+  value?: number;
+  isActive?: boolean;
+  onUpdate?: (value: number) => void;
+  children?: React.ReactNode;
+}
+
+// Data model interface
+interface Transaction {
+  id: string;
+  name: string;
+  amount: number;
+  date: string;
+  type: 'income' | 'expense';
+  category?: string;
+}
+
+// API response interface
+interface ApiResponse<T> {
+  data: T;
+  error?: string;
+  message?: string;
+}
+
+// State interface
+interface DashboardState {
+  activeScreen: 'dashboard' | 'budget' | 'analytics';
+  showModal: boolean;
+  selectedTransaction: Transaction | null;
+}
+```
+
+### Type Guards
+```typescript
+// Check if value is Transaction
+const isTransaction = (value: any): value is Transaction => {
+  return (
+    typeof value === 'object' &&
+    'id' in value &&
+    'amount' in value &&
+    'type' in value
+  );
+};
+
+// Use in code
+if (isTransaction(data)) {
+  console.log(data.amount); // TypeScript knows this is safe
+}
+```
+
+### Utility Types
+```typescript
+// Pick specific properties
+type TransactionSummary = Pick<Transaction, 'id' | 'amount' | 'date'>;
+
+// Omit properties
+type NewTransaction = Omit<Transaction, 'id'>;
+
+// Make all properties optional
+type PartialTransaction = Partial<Transaction>;
+
+// Make all properties required
+type RequiredTransaction = Required<Transaction>;
+```
+
+## Common Utilities
+
+### Date Formatting
+```typescript
+// Format date for display
+const formatDate = (date: string): string => {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+};
+
+// Format for API (ISO)
+const toISODate = (date: Date): string => {
+  return date.toISOString().split('T')[0];
+};
+```
+
+### Number Formatting
+```typescript
+// Currency formatting
+const formatCurrency = (amount: number): string => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  }).format(amount);
+};
+
+// Percentage formatting
+const formatPercent = (value: number): string => {
+  return `${(value * 100).toFixed(1)}%`;
+};
+```
+
+### Array Utilities
+```typescript
+// Group by property
+const groupBy = <T,>(array: T[], key: keyof T): Record<string, T[]> => {
+  return array.reduce((result, item) => {
+    const group = String(item[key]);
+    return {
+      ...result,
+      [group]: [...(result[group] || []), item]
+    };
+  }, {} as Record<string, T[]>);
+};
+
+// Sort by date
+const sortByDate = (transactions: Transaction[]): Transaction[] => {
+  return [...transactions].sort((a, b) => 
+    new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+};
+```
+
+## Error Handling
+
+### Try-Catch Pattern
+```typescript
+const handleAction = async () => {
+  try {
+    const response = await fetch('/api/endpoint');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Action failed:', error.message);
+      // Show user-friendly error
+      alert('Something went wrong. Please try again.');
+    }
+    return null;
+  }
+};
+```
+
+### Error Boundary Component
+```typescript
+import {Component, ReactNode} from 'react';
+
+interface Props {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+}
+
+class ErrorBoundary extends Component<Props, State> {
+  state = {hasError: false};
+
+  static getDerivedStateFromError() {
+    return {hasError: true};
+  }
+
+  componentDidCatch(error: Error) {
+    console.error('Error caught:', error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || (
+        <div className="p-8 text-center">
+          <h2 className="text-xl font-bold text-red-600 mb-2">Something went wrong</h2>
+          <button onClick={() => this.setState({hasError: false})}>
+            Try again
+          </button>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+```
+
+## Testing Patterns
+
+### Component Test Template
+```typescript
+import {render, screen, fireEvent} from '@testing-library/react';
+import ComponentName from './ComponentName';
+
+describe('ComponentName', () => {
+  it('renders correctly', () => {
+    render(<ComponentName title="Test" value={100} />);
+    expect(screen.getByText('Test')).toBeInTheDocument();
+  });
+
+  it('handles click events', () => {
+    const handleClick = jest.fn();
+    render(<ComponentName onAction={handleClick} />);
+    fireEvent.click(screen.getByRole('button'));
+    expect(handleClick).toHaveBeenCalled();
+  });
+});
+```
+
+### Hook Test Template
+```typescript
+import {renderHook, waitFor} from '@testing-library/react';
+import {useFinanceData} from './useFinanceData';
+
+describe('useFinanceData', () => {
+  it('fetches data successfully', async () => {
+    const {result} = renderHook(() => useFinanceData());
+    
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
+
+    expect(result.current.transactions).toBeDefined();
+    expect(result.current.error).toBeNull();
+  });
+});
+```
+
+## Performance Patterns
+
+### Memoization
+```typescript
+import {useMemo, useCallback} from 'react';
+
+const Component = ({data}: {data: Transaction[]}) => {
+  // Memoize expensive calculations
+  const totalIncome = useMemo(() => {
+    return data
+      .filter((t) => t.type === 'income')
+      .reduce((sum, t) => sum + t.amount, 0);
+  }, [data]);
+
+  // Memoize callbacks
+  const handleFilter = useCallback((type: string) => {
+    return data.filter((t) => t.type === type);
+  }, [data]);
+
+  return <div>{totalIncome}</div>;
+};
+```
+
+### Lazy Loading
+```typescript
+import {lazy, Suspense} from 'react';
+
+const HeavyComponent = lazy(() => import('./HeavyComponent'));
+
+const App = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <HeavyComponent />
+  </Suspense>
+);
+```
+
+---
+
+**Usage Note:** These patterns are tested and production-ready. Copy and adapt as needed for new features.

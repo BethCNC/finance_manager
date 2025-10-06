@@ -1,0 +1,398 @@
+---
+alwaysApply: false
+---
+
+# Project Tasks & Roadmap
+
+## 🚀 Phase 1: Core Functionality (Current)
+
+### ✅ Completed
+- [x] Project setup with React + TypeScript + Tailwind
+- [x] Notion API integration with Vercel functions
+- [x] Dashboard UI with metric cards
+- [x] Transaction list with real Notion data
+- [x] Auto-refresh data sync (30s)
+- [x] Responsive sidebar navigation
+- [x] Loading states
+
+### 🔨 In Progress
+- [ ] Transaction creation form
+  - Modal with input fields (name, amount, date, type)
+  - POST endpoint `/api/notion/create`
+  - Notion pages.create() integration
+  - Refresh data after creation
+
+### 📋 Up Next
+- [ ] Budget tracking screen implementation
+  - Connect to existing Months database
+  - Visual budget bars with percentage
+  - Category-based spending breakdown
+  
+- [ ] Analytics screen with real data
+  - Monthly spending trends
+  - Category distribution chart
+  - Year-over-year comparisons
+
+## 🤖 Phase 2: AI Integration
+
+### Planned Features
+- [ ] AI Chat Assistant
+  - Claude API integration
+  - Spending analysis prompts
+  - Budget recommendations
+  - Natural language queries
+
+- [ ] AI Insights Generation
+  - Automatic spending pattern detection
+  - Anomaly detection (unusual expenses)
+  - Savings opportunities identification
+  - Personalized financial tips
+
+### Implementation Tasks
+- [ ] Create `/api/ai-chat.ts` endpoint
+- [ ] Add Claude API key to environment
+- [ ] Build conversation state management
+- [ ] Design insight card components
+- [ ] Implement streaming responses
+
+## 📊 Phase 3: Enhanced Features
+
+### Data Visualization
+- [ ] Interactive charts (Chart.js or Recharts)
+- [ ] Spending heatmap calendar
+- [ ] Income vs expense timeline
+- [ ] Category breakdown pie chart
+
+### User Experience
+- [ ] Transaction search/filter
+- [ ] Date range picker
+- [ ] Export to CSV/PDF
+- [ ] Dark mode toggle
+- [ ] Keyboard shortcuts
+
+### Notion Enhancements
+- [ ] Add Categories to Expenses database
+- [ ] Recurring transaction templates
+- [ ] Tags/labels system
+- [ ] Attachment support
+
+## 🔐 Phase 4: Security & Performance
+
+### Security
+- [ ] Input validation and sanitization
+- [ ] Rate limiting on API endpoints
+- [ ] User authentication (Firebase Auth?)
+- [ ] Role-based access control
+
+### Performance
+- [ ] Response caching (60s TTL)
+- [ ] Pagination for large datasets
+- [ ] Lazy loading components
+- [ ] Image optimization
+- [ ] Bundle size optimization
+
+## 🧪 Phase 5: Testing & Quality
+
+### Testing Strategy
+- [ ] Unit tests for hooks (Jest + React Testing Library)
+- [ ] API endpoint tests
+- [ ] E2E tests (Playwright)
+- [ ] TypeScript strict mode
+- [ ] ESLint + Prettier setup
+
+### Documentation
+- [ ] API documentation
+- [ ] Component Storybook
+- [ ] User guide
+- [ ] Video walkthrough
+
+## 🚢 Deployment & DevOps
+
+### Infrastructure
+- [ ] Custom domain setup
+- [ ] SSL/HTTPS configuration
+- [ ] CDN optimization
+- [ ] Error tracking (Sentry)
+- [ ] Analytics (Google Analytics/Plausible)
+
+### CI/CD
+- [ ] GitHub Actions workflow
+- [ ] Automated testing pipeline
+- [ ] Preview deployments
+- [ ] Staging environment
+
+## 💡 Future Ideas (Backlog)
+
+### Advanced Features
+- [ ] Multi-currency support
+- [ ] Receipt scanning (OCR)
+- [ ] Bill reminders
+- [ ] Investment tracking
+- [ ] Goal setting & tracking
+- [ ] Family/shared budgets
+
+### Integrations
+- [ ] Bank account sync (Plaid)
+- [ ] Email receipt parsing
+- [ ] Calendar integration for scheduled payments
+- [ ] Slack/Discord notifications
+- [ ] Mobile app (React Native)
+
+### AI Enhancements
+- [ ] Voice commands
+- [ ] Predictive budgeting
+- [ ] Auto-categorization
+- [ ] Financial report generation
+- [ ] Tax preparation assistance
+
+## 🐛 Known Issues
+
+### High Priority
+- [ ] API functions don't work with `npm start` (use `vercel dev`)
+- [ ] Need better error messaging for Notion connection failures
+- [ ] Loading state doesn't show on re-fetch
+
+### Medium Priority
+- [ ] Transaction list should be virtualized for performance
+- [ ] No empty state when no transactions exist
+- [ ] Chart gradient needs to work better with black theme
+
+### Low Priority
+- [ ] Mobile nav menu needs implementation
+- [ ] Keyboard navigation for modals
+- [ ] Focus management improvements
+
+## 📝 Technical Debt
+
+- [ ] Extract MetricCard to separate component file
+- [ ] Create shared types file for interfaces
+- [ ] Implement proper error boundaries
+- [ ] Add PropTypes or Zod validation
+- [ ] Centralize API base URL
+- [ ] Create constants file for database IDs
+- [ ] Add JSDoc comments to utility functions
+
+## 🎯 Success Metrics
+
+### MVP (Minimum Viable Product)
+- View real-time financial data from Notion ✅
+- See income, expenses, and balance
+- Browse transaction history
+- Mobile responsive design
+
+### v1.0 Goals
+- Create/edit/delete transactions
+- Set and track budgets
+- View basic analytics
+- AI-powered insights
+- 95%+ TypeScript coverage
+
+### v2.0 Vision
+- Multi-user support
+- Advanced AI features
+- Bank integrations
+- Mobile app
+- 10,000+ monthly active users
+
+---
+
+**Last Updated:** 2025-10-05  
+**Current Version:** 0.1.0 (MVP)  
+**Next Milestone:** Transaction Creation (v0.2.0)
+# Project Tasks & Roadmap
+
+## 🚀 Phase 1: Core Functionality (Current)
+
+### ✅ Completed
+- [x] Project setup with React + TypeScript + Tailwind
+- [x] Notion API integration with Vercel functions
+- [x] Dashboard UI with metric cards
+- [x] Transaction list with real Notion data
+- [x] Auto-refresh data sync (30s)
+- [x] Responsive sidebar navigation
+- [x] Loading states
+
+### 🔨 In Progress
+- [ ] Transaction creation form
+  - Modal with input fields (name, amount, date, type)
+  - POST endpoint `/api/notion/create`
+  - Notion pages.create() integration
+  - Refresh data after creation
+
+### 📋 Up Next
+- [ ] Budget tracking screen implementation
+  - Connect to existing Months database
+  - Visual budget bars with percentage
+  - Category-based spending breakdown
+  
+- [ ] Analytics screen with real data
+  - Monthly spending trends
+  - Category distribution chart
+  - Year-over-year comparisons
+
+## 🤖 Phase 2: AI Integration
+
+### Planned Features
+- [ ] AI Chat Assistant
+  - Claude API integration
+  - Spending analysis prompts
+  - Budget recommendations
+  - Natural language queries
+
+- [ ] AI Insights Generation
+  - Automatic spending pattern detection
+  - Anomaly detection (unusual expenses)
+  - Savings opportunities identification
+  - Personalized financial tips
+
+### Implementation Tasks
+- [ ] Create `/api/ai-chat.ts` endpoint
+- [ ] Add Claude API key to environment
+- [ ] Build conversation state management
+- [ ] Design insight card components
+- [ ] Implement streaming responses
+
+## 📊 Phase 3: Enhanced Features
+
+### Data Visualization
+- [ ] Interactive charts (Chart.js or Recharts)
+- [ ] Spending heatmap calendar
+- [ ] Income vs expense timeline
+- [ ] Category breakdown pie chart
+
+### User Experience
+- [ ] Transaction search/filter
+- [ ] Date range picker
+- [ ] Export to CSV/PDF
+- [ ] Dark mode toggle
+- [ ] Keyboard shortcuts
+
+### Notion Enhancements
+- [ ] Add Categories to Expenses database
+- [ ] Recurring transaction templates
+- [ ] Tags/labels system
+- [ ] Attachment support
+
+## 🔐 Phase 4: Security & Performance
+
+### Security
+- [ ] Input validation and sanitization
+- [ ] Rate limiting on API endpoints
+- [ ] User authentication (Firebase Auth?)
+- [ ] Role-based access control
+
+### Performance
+- [ ] Response caching (60s TTL)
+- [ ] Pagination for large datasets
+- [ ] Lazy loading components
+- [ ] Image optimization
+- [ ] Bundle size optimization
+
+## 🧪 Phase 5: Testing & Quality
+
+### Testing Strategy
+- [ ] Unit tests for hooks (Jest + React Testing Library)
+- [ ] API endpoint tests
+- [ ] E2E tests (Playwright)
+- [ ] TypeScript strict mode
+- [ ] ESLint + Prettier setup
+
+### Documentation
+- [ ] API documentation
+- [ ] Component Storybook
+- [ ] User guide
+- [ ] Video walkthrough
+
+## 🚢 Deployment & DevOps
+
+### Infrastructure
+- [ ] Custom domain setup
+- [ ] SSL/HTTPS configuration
+- [ ] CDN optimization
+- [ ] Error tracking (Sentry)
+- [ ] Analytics (Google Analytics/Plausible)
+
+### CI/CD
+- [ ] GitHub Actions workflow
+- [ ] Automated testing pipeline
+- [ ] Preview deployments
+- [ ] Staging environment
+
+## 💡 Future Ideas (Backlog)
+
+### Advanced Features
+- [ ] Multi-currency support
+- [ ] Receipt scanning (OCR)
+- [ ] Bill reminders
+- [ ] Investment tracking
+- [ ] Goal setting & tracking
+- [ ] Family/shared budgets
+
+### Integrations
+- [ ] Bank account sync (Plaid)
+- [ ] Email receipt parsing
+- [ ] Calendar integration for scheduled payments
+- [ ] Slack/Discord notifications
+- [ ] Mobile app (React Native)
+
+### AI Enhancements
+- [ ] Voice commands
+- [ ] Predictive budgeting
+- [ ] Auto-categorization
+- [ ] Financial report generation
+- [ ] Tax preparation assistance
+
+## 🐛 Known Issues
+
+### High Priority
+- [ ] API functions don't work with `npm start` (use `vercel dev`)
+- [ ] Need better error messaging for Notion connection failures
+- [ ] Loading state doesn't show on re-fetch
+
+### Medium Priority
+- [ ] Transaction list should be virtualized for performance
+- [ ] No empty state when no transactions exist
+- [ ] Chart gradient needs to work better with black theme
+
+### Low Priority
+- [ ] Mobile nav menu needs implementation
+- [ ] Keyboard navigation for modals
+- [ ] Focus management improvements
+
+## 📝 Technical Debt
+
+- [ ] Extract MetricCard to separate component file
+- [ ] Create shared types file for interfaces
+- [ ] Implement proper error boundaries
+- [ ] Add PropTypes or Zod validation
+- [ ] Centralize API base URL
+- [ ] Create constants file for database IDs
+- [ ] Add JSDoc comments to utility functions
+
+## 🎯 Success Metrics
+
+### MVP (Minimum Viable Product)
+- View real-time financial data from Notion ✅
+- See income, expenses, and balance
+- Browse transaction history
+- Mobile responsive design
+
+### v1.0 Goals
+- Create/edit/delete transactions
+- Set and track budgets
+- View basic analytics
+- AI-powered insights
+- 95%+ TypeScript coverage
+
+### v2.0 Vision
+- Multi-user support
+- Advanced AI features
+- Bank integrations
+- Mobile app
+- 10,000+ monthly active users
+
+---
+
+**Last Updated:** 2025-10-05  
+**Current Version:** 0.1.0 (MVP)  
+**Next Milestone:** Transaction Creation (v0.2.0)

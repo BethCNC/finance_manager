@@ -1,0 +1,54 @@
+---
+alwaysApply: true
+---
+# Files Claude Code Should NOT Modify
+
+## Configuration Files (Touch with Caution)
+- package.json (only edit if adding dependencies)
+- tsconfig.json (TypeScript config - already optimized)
+- tailwind.config.js (Tailwind setup - working as is)
+- postcss.config.js (PostCSS - no changes needed)
+- vercel.json (Vercel routing - configured correctly)
+
+## Environment & Secrets
+- .env.local (contains API keys - never commit)
+- .env.production (if exists)
+- .vercel (Vercel deployment cache)
+
+## Build Artifacts
+- /build (production build)
+- /node_modules (dependencies)
+- .DS_Store (macOS metadata)
+
+## Git
+- .gitignore (already configured)
+
+## Notion Database IDs
+These are HARDCODED and should NEVER change:
+```typescript
+// In api/notion.ts
+const INCOMES_DB = '18986edc-ae2c-81b8-8f77-e19036368d99';
+const EXPENSES_DB = '18986edc-ae2c-815f-b56c-ed1964dccaf5';
+const MONTHS_DB = '18986edc-ae2c-81ca-a41c-cde295ea544f';
+```
+
+## Safe to Modify
+✅ /src/**/*.tsx (React components)
+✅ /src/**/*.ts (TypeScript utilities/hooks)
+✅ /api/**/*.ts (API endpoints)
+✅ README.md (documentation)
+✅ .claude/**/*.md (these instructions)
+
+## When Adding Dependencies
+1. Use exact versions: `npm install package@1.2.3`
+2. Test thoroughly before committing
+3. Update package.json manually if needed
+4. Document in README if it's a major addition
+
+## Protected Patterns
+DO NOT change these established patterns:
+- Arrow function parentheses: `(param) =>`
+- Object brace spacing: `{name, value}`
+- Tailwind-only styling (no custom CSS)
+- Functional components only (no class components)
+- TypeScript strict typing (all interfaces required)

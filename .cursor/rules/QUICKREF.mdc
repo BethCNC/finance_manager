@@ -1,0 +1,215 @@
+# Finance Manager - Quick Reference Card
+
+## 🎯 Project at a Glance
+
+**What:** AI financial dashboard syncing with Notion  
+**Stack:** React + TypeScript + Tailwind + Vercel + Notion API  
+**Status:** MVP complete, ready for feature additions
+
+## 🔑 Critical Rules
+
+### Code Style (NON-NEGOTIABLE)
+```typescript
+// ✅ ALWAYS: Parentheses on arrow functions
+(param) => {...}
+({name, value}) => {...}
+
+// ✅ ALWAYS: Minimal object brace spacing
+const obj = {name, value}
+const {data, loading} = useHook()
+
+// ❌ NEVER: Inline styles or custom CSS
+style={{color: 'red'}}  // WRONG
+className="text-red-600"  // RIGHT
+```
+
+### Security Rules
+- ✅ API keys ONLY in `.env.local` or Vercel env
+- ✅ Notion queries ONLY in `/api/*.ts` (server-side)
+- ❌ NEVER expose secrets in frontend
+- ❌ NEVER commit `.env.local`
+
+## 📁 Key Files & Locations
+
+```
+├── api/notion.ts              ← Notion API queries (server)
+├── src/
+│   ├── components/
+│   │   └── FinancialDashboard.tsx  ← Main UI
+│   ├── hooks/
+│   │   └── useFinanceData.ts       ← Data fetching
+│   └── App.tsx
+├── .env.local                 ← API keys (gitignored)
+└── .claude/                   ← This directory
+```
+
+## 🗄️ Notion Database IDs (Hardcoded)
+
+```typescript
+INCOMES  = '18986edc-ae2c-81b8-8f77-e19036368d99'
+EXPENSES = '18986edc-ae2c-815f-b56c-ed1964dccaf5'
+MONTHS   = '18986edc-ae2c-81ca-a41c-cde295ea544f'
+```
+
+**Properties:**
+- Incomes/Expenses: `Name` (title), `Amount` (number), `Date` (date)
+- Months: `Incomes Amount` (rollup), `Expenses amount` (rollup), `Profite` (formula)
+
+## 🎨 Design System
+
+### Colors
+```typescript
+Background:  bg-gray-50
+Cards:       bg-white border-gray-200
+Text:        text-black (heading), text-gray-700 (body), text-gray-500 (meta)
+Accent:      bg-black text-white (CTAs)
+Success:     text-emerald-600
+Error:       text-red-600
+Hover:       hover:border-black hover:bg-gray-800
+```
+
+### Components
+```typescript
+// Card
+<div className="bg-white border border-gray-200 rounded-xl p-6 hover:border-black transition-all">
+
+// Button
+<button className="bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition-all">
+
+// Input
+<input className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:border-black focus:outline-none" />
+```
+
+## 🔌 API Quick Reference
+
+### Endpoints
+```bash
+GET /api/notion?type=transactions  # Returns income + expenses
+GET /api/notion?type=summary       # Returns monthly totals
+```
+
+### Response Format
+```typescript
+// Transactions
+{transactions: Array<{
+  id: string,
+  name: string,
+  amount: number,  // negative for expenses
+  date: string,
+  type: 'income' | 'expense',
+  category: string
+}>}
+
+// Summary
+{
+  totalIncome: number,
+  totalExpenses: number,
+  profit: number
+}
+```
+
+### Notion Property Access
+```typescript
+// Title
+page.properties.Name?.title[0]?.plain_text || 'Untitled'
+
+// Number
+page.properties.Amount?.number || 0
+
+// Date
+page.properties.Date?.date?.start || ''
+
+// Rollup
+page.properties['Incomes Amount']?.rollup?.number || 0
+```
+
+## ⚡ Common Commands
+
+```bash
+# Development
+npm install           # Install dependencies
+npm start            # Frontend only (API won't work)
+vercel dev           # Full stack with API functions
+
+# Testing
+npm run build        # Check TypeScript errors
+curl localhost:3000/api/notion?type=transactions
+
+# Deployment
+vercel               # Deploy preview
+vercel --prod        # Deploy production
+vercel env add       # Add environment variable
+```
+
+## 🚨 Common Issues & Fixes
+
+| Issue | Solution |
+|-------|----------|
+| API returns 500 | Check `.env.local` has `NOTION_API_KEY` |
+| "Failed to fetch" | Use `vercel dev` not `npm start` |
+| Empty data | Verify Notion integration is connected |
+| Type errors | Run `npm install @types/node` |
+| CORS errors | Check CORS headers in API response |
+
+## 🔄 Typical Workflows
+
+### Add New Component
+1. Create in `/src/components/ComponentName.tsx`
+2. Define interface for props
+3. Use functional component with TypeScript
+4. Follow Tailwind design system
+5. Export default
+
+### Add API Endpoint
+1. Edit `/api/notion.ts`
+2. Add new `if (type === 'newtype')` case
+3. Query Notion database
+4. Return formatted JSON
+5. Update hook to fetch new data
+
+### Add New Screen
+1. Create screen function in `FinancialDashboard.tsx`
+2. Add `NavButton` in sidebar
+3. Add condition in main content: `{activeScreen === 'screen' && <Screen />}`
+
+## 📚 Documentation Links
+
+- [Full Instructions](./.claude/instructions.md) ← Complete guide
+- [Code Patterns](./.claude/patterns.md) ← Copy-paste snippets
+- [Tasks & Roadmap](./.claude/tasks.md) ← What to build next
+- [Project Context](./.claude/context.md) ← Project state
+- [Main README](../README.md) ← Setup & deployment
+
+## 🎯 Success Checklist
+
+Before committing:
+- [ ] `npm run build` passes with no errors
+- [ ] Arrow functions have parentheses: `(x) => x`
+- [ ] Object braces minimal spacing: `{a, b}`
+- [ ] Only Tailwind classes (no inline styles)
+- [ ] API keys only in `.env.local`
+- [ ] Components under 200 lines
+- [ ] All Notion properties have fallbacks: `|| defaultValue`
+
+## 💡 Next Features to Build
+
+1. **Transaction Creation** (High Priority)
+   - Modal form with validation
+   - POST to `/api/notion/create`
+   - Use `notion.pages.create()`
+
+2. **AI Chat Assistant** (High Impact)
+   - Claude API integration
+   - Spending analysis
+   - Budget recommendations
+
+3. **Budget Visualization** (User Requested)
+   - Progress bars
+   - Category breakdown
+   - Monthly comparisons
+
+---
+
+**When in doubt:** Check the full instructions at `.claude/instructions.md`  
+**Need patterns:** See `.claude/patterns.md` for copy-paste code  
+**What to build:** Check `.claude/tasks.md` for roadmap

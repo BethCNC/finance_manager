@@ -1,0 +1,114 @@
+---
+alwaysApply: true
+---
+
+# Project Context for Claude Code
+
+## Project Identity
+**Name:** Finance Manager  
+**Type:** AI-Powered Financial Dashboard  
+**Owner:** Beth Cartrette (7starsdesign)  
+**Stack:** React + TypeScript + Tailwind + Notion + Vercel
+
+## Current State
+- ✅ Core dashboard UI implemented
+- ✅ Notion integration working (3 databases)
+- ✅ Real-time data sync (30s intervals)
+- ✅ Vercel serverless API layer
+- ⏳ AI chat assistant (planned)
+- ⏳ Transaction creation form (planned)
+- ⏳ Budget visualization (planned)
+
+## Active Databases (Notion)
+1. **Incomes** → All income transactions
+2. **Expenses** → All expense transactions  
+3. **Months** → Monthly aggregations with rollups
+
+## Code Preferences
+- Arrow functions: ALWAYS use parentheses `(param) =>`
+- Object braces: Minimal spacing `{name, value}`
+- Components: Functional only, TypeScript interfaces required
+- Styling: Tailwind utility classes only, NO custom CSS
+- Black accent color for primary actions and emphasis
+
+## Key Files
+- `/api/notion.ts` → Server-side Notion queries
+- `/src/components/FinancialDashboard.tsx` → Main UI
+- `/src/hooks/useFinanceData.ts` → Data fetching logic
+- `/.env.local` → API keys (NEVER commit)
+
+## When Making Changes
+1. Check TypeScript errors: `npm run build`
+2. Follow existing component patterns
+3. Keep components under 200 lines
+4. Use design system colors (gray-50, white, black)
+5. Test API endpoints with `vercel dev`
+
+## Common Commands
+```bash
+npm start          # Dev server (frontend only)
+vercel dev         # Full stack with API
+npm run build      # Type check
+vercel --prod      # Deploy to production
+```
+
+## Links
+- [Notion Integration Setup](https://www.notion.so/my-integrations)
+- [Finance Tracker Page](https://www.notion.so/Finance-Tracker-18986edcae2c81b7a212cce615e18010)
+- [Project README](../README.md)
+- [Full Instructions](./.claude/instructions.md)
+# Project Context for Claude Code
+
+## Project Identity
+**Name:** Finance Manager  
+**Type:** AI-Powered Financial Dashboard  
+**Owner:** Beth Cartrette (7starsdesign)  
+**Stack:** React + TypeScript + Tailwind + Notion + Vercel
+
+## Current State
+- ✅ Core dashboard UI implemented
+- ✅ Notion integration working (3 databases)
+- ✅ Real-time data sync (30s intervals)
+- ✅ Vercel serverless API layer
+- ⏳ AI chat assistant (planned)
+- ⏳ Transaction creation form (planned)
+- ⏳ Budget visualization (planned)
+
+## Active Databases (Notion)
+1. **Incomes** → All income transactions
+2. **Expenses** → All expense transactions  
+3. **Months** → Monthly aggregations with rollups
+
+## Code Preferences
+- Arrow functions: ALWAYS use parentheses `(param) =>`
+- Object braces: Minimal spacing `{name, value}`
+- Components: Functional only, TypeScript interfaces required
+- Styling: Tailwind utility classes only, NO custom CSS
+- Black accent color for primary actions and emphasis
+
+## Key Files
+- `/api/notion.ts` → Server-side Notion queries
+- `/src/components/FinancialDashboard.tsx` → Main UI
+- `/src/hooks/useFinanceData.ts` → Data fetching logic
+- `/.env.local` → API keys (NEVER commit)
+
+## When Making Changes
+1. Check TypeScript errors: `npm run build`
+2. Follow existing component patterns
+3. Keep components under 200 lines
+4. Use design system colors (gray-50, white, black)
+5. Test API endpoints with `vercel dev`
+
+## Common Commands
+```bash
+npm start          # Dev server (frontend only)
+vercel dev         # Full stack with API
+npm run build      # Type check
+vercel --prod      # Deploy to production
+```
+
+## Links
+- [Notion Integration Setup](https://www.notion.so/my-integrations)
+- [Finance Tracker Page](https://www.notion.so/Finance-Tracker-18986edcae2c81b7a212cce615e18010)
+- [Project README](../README.md)
+- [Full Instructions](./.claude/instructions.md)

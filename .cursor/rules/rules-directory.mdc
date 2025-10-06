@@ -1,0 +1,220 @@
+# Claude Code Documentation Index
+
+Welcome! This directory contains comprehensive instructions for working on the Finance Manager project.
+
+## 📖 Documentation Files
+
+### 🚀 Start Here
+- **[QUICKREF.md](./QUICKREF.md)** ← Quick reference card for instant answers
+- **[context.md](./context.md)** ← Project overview and current state
+
+### 📚 Complete Guides
+- **[instructions.md](./instructions.md)** ← FULL project instructions & best practices
+  - Architecture & data flow
+  - Code style conventions (CRITICAL)
+  - API patterns & Notion integration
+  - Security & performance guidelines
+  - Decision frameworks
+
+### 💻 Implementation Resources
+- **[patterns.md](./patterns.md)** ← Copy-paste code patterns & snippets
+  - Component templates
+  - Custom hooks
+  - API endpoints
+  - Tailwind patterns
+  - TypeScript utilities
+  - Testing examples
+
+### 📋 Planning & Tasks
+- **[tasks.md](./tasks.md)** ← Roadmap, backlog & known issues
+  - Current sprint
+  - Feature priorities
+  - Technical debt
+  - Known bugs
+  - Success metrics
+
+### 🔒 Safety
+- **[DO-NOT-MODIFY.md](./DO-NOT-MODIFY.md)** ← Protected files & patterns
+
+## 🎯 How to Use This Documentation
+
+### When Starting a New Task:
+1. Read **[QUICKREF.md](./QUICKREF.md)** for project essentials
+2. Check **[tasks.md](./tasks.md)** for task details & priority
+3. Reference **[patterns.md](./patterns.md)** for implementation code
+4. Verify against **[instructions.md](./instructions.md)** for best practices
+
+### When You Have a Question:
+- **"How do I...?"** → [patterns.md](./patterns.md)
+- **"What's the rule for...?"** → [instructions.md](./instructions.md)
+- **"What should I build next?"** → [tasks.md](./tasks.md)
+- **"What's the current state?"** → [context.md](./context.md)
+- **"Quick answer needed"** → [QUICKREF.md](./QUICKREF.md)
+
+### When Debugging:
+1. Check **[QUICKREF.md](./QUICKREF.md)** → "Common Issues & Fixes"
+2. Review **[instructions.md](./instructions.md)** → "Testing & Debugging"
+3. Verify **[DO-NOT-MODIFY.md](./DO-NOT-MODIFY.md)** → Protected patterns
+
+## 🔑 Critical Rules (Read First!)
+
+### Code Style (ABSOLUTE REQUIREMENTS)
+```typescript
+// ✅ Arrow functions: ALWAYS use parentheses
+(param) => {...}
+({name, value}) => {...}
+
+// ✅ Object braces: MINIMAL spacing
+const obj = {name, value}
+const {data, loading} = useHook()
+
+// ❌ NO inline styles, NO custom CSS
+// ONLY Tailwind utility classes
+```
+
+### Security (NEVER VIOLATE)
+- ✅ API keys ONLY in `.env.local` or Vercel env vars
+- ✅ Notion queries ONLY server-side (`/api/*.ts`)
+- ❌ NEVER expose secrets in frontend
+- ❌ NEVER commit `.env.local`
+
+### Architecture (MAINTAIN)
+```
+Notion Databases → API (/api/notion.ts) → Hook (useFinanceData) → UI
+```
+
+## 📁 Project Structure Quick Map
+
+```
+finance_manager/
+├── .claude/              ← YOU ARE HERE
+│   ├── README.md        ← This file
+│   ├── QUICKREF.md      ← Quick reference card
+│   ├── instructions.md  ← Complete guide
+│   ├── patterns.md      ← Code snippets
+│   ├── tasks.md         ← Roadmap
+│   ├── context.md       ← Project state
+│   └── DO-NOT-MODIFY.md ← Protected files
+│
+├── api/
+│   └── notion.ts        ← Notion API (server-side)
+│
+├── src/
+│   ├── components/
+│   │   └── FinancialDashboard.tsx  ← Main UI
+│   ├── hooks/
+│   │   └── useFinanceData.ts       ← Data fetching
+│   ├── App.tsx
+│   └── index.tsx
+│
+├── .env.local           ← API keys (gitignored)
+├── package.json
+└── README.md            ← User-facing docs
+```
+
+## 🚦 Getting Started Workflow
+
+### First Time Setup
+1. Read this README
+2. Scan **[QUICKREF.md](./QUICKREF.md)** (2 min)
+3. Review **[instructions.md](./instructions.md)** sections relevant to your task
+4. Keep **[patterns.md](./patterns.md)** open for reference
+
+### Daily Workflow
+1. Check **[tasks.md](./tasks.md)** for priorities
+2. Reference **[patterns.md](./patterns.md)** while coding
+3. Validate against **[QUICKREF.md](./QUICKREF.md)** checklist before committing
+
+## 🎓 Learning Path
+
+### Level 1: Essentials (30 min)
+- [ ] Read [QUICKREF.md](./QUICKREF.md)
+- [ ] Scan [context.md](./context.md)
+- [ ] Review code style rules in [instructions.md](./instructions.md)
+
+### Level 2: Implementation (1 hour)
+- [ ] Study [patterns.md](./patterns.md) component examples
+- [ ] Understand API patterns in [instructions.md](./instructions.md)
+- [ ] Review Notion integration details
+
+### Level 3: Architecture (2 hours)
+- [ ] Deep dive into [instructions.md](./instructions.md) full guide
+- [ ] Understand data flow & architecture
+- [ ] Learn security & performance best practices
+
+### Level 4: Mastery (ongoing)
+- [ ] Contribute to [patterns.md](./patterns.md) with new snippets
+- [ ] Update [tasks.md](./tasks.md) as features complete
+- [ ] Refine [instructions.md](./instructions.md) based on learnings
+
+## 🔗 External Resources
+
+### Notion Integration
+- [Notion API Docs](https://developers.notion.com/)
+- [Your Notion Integration](https://www.notion.so/my-integrations)
+- [Finance Tracker Page](https://www.notion.so/Finance-Tracker-18986edcae2c81b7a212cce615e18010)
+
+### Tech Stack
+- [React Docs](https://react.dev/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [Vercel Docs](https://vercel.com/docs)
+- [Lucide Icons](https://lucide.dev/)
+
+### APIs
+- [Anthropic Claude](https://docs.anthropic.com/) (for AI features)
+
+## 💡 Tips for Success
+
+### DO:
+✅ Follow established patterns from [patterns.md](./patterns.md)  
+✅ Check [QUICKREF.md](./QUICKREF.md) before asking questions  
+✅ Update [tasks.md](./tasks.md) when completing features  
+✅ Add new patterns to [patterns.md](./patterns.md) when creating reusable code  
+✅ Run `npm run build` before committing  
+
+### DON'T:
+❌ Skip reading [QUICKREF.md](./QUICKREF.md) critical rules  
+❌ Modify files listed in [DO-NOT-MODIFY.md](./DO-NOT-MODIFY.md)  
+❌ Commit code that violates style conventions  
+❌ Expose API keys in frontend  
+❌ Use inline styles or custom CSS  
+
+## 🐛 Troubleshooting Guide
+
+**Problem:** Can't find information  
+→ Check [QUICKREF.md](./QUICKREF.md) first, then search [instructions.md](./instructions.md)
+
+**Problem:** Code pattern needed  
+→ [patterns.md](./patterns.md) has copy-paste examples
+
+**Problem:** Don't know what to build  
+→ [tasks.md](./tasks.md) has prioritized roadmap
+
+**Problem:** Breaking established patterns  
+→ Review [instructions.md](./instructions.md) → Code Style Conventions
+
+**Problem:** API not working  
+→ [QUICKREF.md](./QUICKREF.md) → Common Issues & Fixes
+
+## 📊 Documentation Stats
+
+- **Total Files:** 6 documentation files
+- **Total Lines:** 2,500+ lines of guidance
+- **Coverage:** Architecture, code style, patterns, tasks, security
+- **Last Updated:** 2025-10-05
+
+## 🎯 Success Metrics
+
+This documentation helps you:
+- ✅ Write code 3x faster with patterns
+- ✅ Reduce bugs by following conventions
+- ✅ Onboard to project in <1 hour
+- ✅ Make consistent architectural decisions
+- ✅ Maintain security & performance standards
+
+---
+
+**Quick Start:** Read [QUICKREF.md](./QUICKREF.md) → Check [tasks.md](./tasks.md) → Code with [patterns.md](./patterns.md) → Validate with [instructions.md](./instructions.md)
+
+**Remember:** These docs are living—update them as the project evolves!
