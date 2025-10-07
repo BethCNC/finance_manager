@@ -32,11 +32,21 @@ export const useFinanceData = () => {
           fetch('/api/notion?type=summary'),
         ]);
 
+        if (!txRes.ok || !summaryRes.ok) {
+          console.error('API Error:', txRes.status, summaryRes.status);
+          setLoading(false);
+          return;
+        }
+
         const txData = await txRes.json();
         const summaryData = await summaryRes.json();
 
         setTransactions(txData.transactions || []);
-        setSummary(summaryData);
+        setSummary({
+          totalIncome: summaryData.totalIncome || 0,
+          totalExpenses: summaryData.totalExpenses || 0,
+          profit: summaryData.profit || 0,
+        });
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -45,7 +55,7 @@ export const useFinanceData = () => {
     };
 
     fetchData();
-    
+
     // Refresh every 30 seconds
     const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
