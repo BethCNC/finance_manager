@@ -7,6 +7,10 @@ interface Transaction {
   date: string;
   type: 'income' | 'expense';
   category: string;
+  subscription?: boolean;
+  business?: boolean;
+  account?: string;
+  person?: string;
 }
 
 interface Summary {
