@@ -1,34 +1,6 @@
-# OpenAI Setup - AI Financial Life Coach
-
-**Purpose:** Set up OpenAI GPT-4o-mini for AI Financial Life Coach  
-**Status:** ✅ Complete - Ready for AI Agent Development  
-**Date:** October 2025
-
 ---
-
-## 🎯 Why OpenAI GPT-4o-mini?
-
-### **Cost Comparison:**
-- **GPT-4o-mini:** $0.15/1M input, $0.60/1M output
-- **Claude 3 Sonnet:** $3/1M input, $15/1M output
-- **Savings:** 20x cheaper than Claude 3! 💰
-
-### **Quality for Financial Analysis:**
-- ✅ Excellent for financial data analysis
-- ✅ Good at understanding context
-- ✅ Reliable for personal finance use cases
-- ✅ Fast response times
-- ✅ Perfect for conversational AI
-
-### **Integration Benefits:**
-- ✅ Simple REST API
-- ✅ No complex frameworks needed
-- ✅ Works with existing Node.js stack
-- ✅ Minimal setup required
-- ✅ Easy to maintain and extend
-
+alwaysApply: true
 ---
-
 ## 🚀 Step-by-Step Setup
 
 ### **Step 1: Get OpenAI API Key**

@@ -1,0 +1,370 @@
+---
+alwaysApply: false
+---
+
+# Zero-Based Budgeting Guide
+
+### What is zero‑based budgeting?
+
+Zero‑based budgeting means every dollar of expected income is assigned a
+job before the month begins.\
+Income − Planned Expenses − Planned Savings − Planned Debt Payments = 0
+at plan time.\
+During the month, you track actuals and re‑allocate intentionally if the
+plan needs to change.
+
+------------------------------------------------------------------------
+
+## Zero Based Budgeting in Detail
+
+Here's a step-by-step guide for building a Zero-Based Budget (ZBB)
+system using three months of your real transaction data --- whether
+you're working in Notion, Google Sheets, or another tool.
+
+### 🧭 What "Zero-Based Budgeting" Means
+
+A Zero-Based Budget ensures every dollar of income has a purpose ---
+assigned to spending, saving, or debt payoff --- so that:
+
+**Income − Expenses − Savings − Debt Payments = \$0**
+
+It doesn't mean you have \$0 in your bank account; it means every dollar
+is accounted for.
+
+------------------------------------------------------------------------
+
+## 🧩 Step 1: Gather Your Transaction Data
+
+### A. Export Statements
+
+Export the last three months of transaction data from checking accounts,
+credit cards, and cash apps.\
+Format: CSV or Excel.
+
+### B. Clean the Data
+
+Remove duplicates, standardize columns
+(`Date | Merchant | Amount | Category | Notes`), and convert expenses to
+negatives and income to positives.
+
+------------------------------------------------------------------------
+
+## 🧮 Step 2: Create Your Category System
+
+Start broad; refine as you go.
+
+  Type            Example Categories
+  --------------- -----------------------------------------------------
+  🏠 Essentials   Rent/Mortgage, Utilities, Groceries, Transportation
+  💳 Financial    Debt Payments, Savings, Investments
+  💅 Lifestyle    Dining Out, Entertainment, Subscriptions, Shopping
+  ❤️ Personal     Health, Family, Gifts, Pets
+  🧰 Work         Software, Business Expenses, Taxes
+
+You can refine later into subcategories like:
+
+-   Groceries → Food Staples, Household Goods\
+-   Subscriptions → Streaming, Software Tools
+
+------------------------------------------------------------------------
+
+## 📊 Step 3: Categorize the Transactions
+
+Assign each transaction a category and add notes. Use a "Normalized
+Merchant" field to simplify naming (e.g., "Wal-Mart #203" → "Walmart").
+
+In Notion, add properties: Date, Merchant, Normalized Merchant, Amount,
+Category, Type, and Month.
+
+------------------------------------------------------------------------
+
+## 🧾 Step 4: Calculate Monthly Totals
+
+Create monthly summaries by Month and Category to see total income,
+spending, and savings rate.\
+In Notion: use Group by Month and Rollups.\
+In Sheets: use Pivot Tables.
+
+------------------------------------------------------------------------
+
+## 💡 Step 5: Establish Your Baseline Budget
+
+Average 3 months of spending to form your baseline.\
+Example:
+
+  Category        M1     M2     M3     Avg
+  --------------- ------ ------ ------ ------
+  Rent            1500   1500   1500   1500
+  Groceries       600    500    550    550
+  Subscriptions   80     95     90     88
+  Dining Out      200    250    150    200
+
+------------------------------------------------------------------------
+
+## 🎯 Step 6: Build the Zero-Based Budget
+
+List total income, then assign every dollar to a category until
+Remaining = 0.
+
+Example:
+
+  Category       Budgeted   Actual    Difference
+  -------------- ---------- --------- ------------
+  Income         5000       5050      +50
+  Rent           1500       1500      0
+  Groceries      550        580       -30
+  Dining Out     200        180       +20
+  Savings        1000       1000      0
+  Debt           300        300       0
+  Misc.          1450       1490      -40
+  **Leftover**   **0**      **+50**   ✅
+
+------------------------------------------------------------------------
+
+## 🔁 Step 7: Review & Adjust Each Month
+
+Compare budget vs actual, identify trends, and refine categories.
+
+------------------------------------------------------------------------
+
+## 🧠 Step 8: Automate (Optional)
+
+Use Notion formulas or Plaid → Sheets → Notion API for automation.
+
+------------------------------------------------------------------------
+
+## 📘 Optional: Create a Finance Dashboard in Notion
+
+Link your Transactions, Budget Plan, and Monthly Summary databases to
+visualize spending trends.
+
+------------------------------------------------------------------------
+
+### Budget Structure
+
+Each budget line has Title, Date, Category, Type, Planned, and Notes.
+
+Views: This Month, Oct--Dec 2025, 2026 All, Charts.
+
+------------------------------------------------------------------------
+
+### Monthly Workflow
+
+1.  Plan income and envelopes per category until balanced to zero.\
+2.  Track actuals in Transactions.\
+3.  Adjust mid-month intentionally.\
+4.  Close the month by comparing planned vs actual.
+
+------------------------------------------------------------------------
+
+### Transfers & Fees Policy
+
+Only record transfer fees as expenses. Exclude principal transfer legs.
+
+------------------------------------------------------------------------
+
+### Tips
+
+-   Keep categories short.\
+-   Use Notes for context.\
+-   Treat sinking funds as Savings envelopes.
+
+------------------------------------------------------------------------
+
+### FAQ
+
+**Do I need rollups?** No --- use filtered views.\
+**Irregular income?** Use a To Be Budgeted buffer.\
+**Annual bills?** Save ahead in months you can.
+
+------------------------------------------------------------------------
+
+**Links** - [Transactions
+DB](https://www.notion.so/82fc50e5b6b343a5a2ad1904f47404c0?pvs=21) -
+[Beth's
+Budget](https://www.notion.so/27e86edcae2c819da256e5c3772ee6a1?pvs=21) -
+[Bryan's
+Budget](https://www.notion.so/9a090afcdf174c1bb76d98d1a567f5d9?pvs=21)
+# Zero-Based Budgeting Guide
+
+### What is zero‑based budgeting?
+
+Zero‑based budgeting means every dollar of expected income is assigned a
+job before the month begins.\
+Income − Planned Expenses − Planned Savings − Planned Debt Payments = 0
+at plan time.\
+During the month, you track actuals and re‑allocate intentionally if the
+plan needs to change.
+
+------------------------------------------------------------------------
+
+## Zero Based Budgeting in Detail
+
+Here's a step-by-step guide for building a Zero-Based Budget (ZBB)
+system using three months of your real transaction data --- whether
+you're working in Notion, Google Sheets, or another tool.
+
+### 🧭 What "Zero-Based Budgeting" Means
+
+A Zero-Based Budget ensures every dollar of income has a purpose ---
+assigned to spending, saving, or debt payoff --- so that:
+
+**Income − Expenses − Savings − Debt Payments = \$0**
+
+It doesn't mean you have \$0 in your bank account; it means every dollar
+is accounted for.
+
+------------------------------------------------------------------------
+
+## 🧩 Step 1: Gather Your Transaction Data
+
+### A. Export Statements
+
+Export the last three months of transaction data from checking accounts,
+credit cards, and cash apps.\
+Format: CSV or Excel.
+
+### B. Clean the Data
+
+Remove duplicates, standardize columns
+(`Date | Merchant | Amount | Category | Notes`), and convert expenses to
+negatives and income to positives.
+
+------------------------------------------------------------------------
+
+## 🧮 Step 2: Create Your Category System
+
+Start broad; refine as you go.
+
+  Type            Example Categories
+  --------------- -----------------------------------------------------
+  🏠 Essentials   Rent/Mortgage, Utilities, Groceries, Transportation
+  💳 Financial    Debt Payments, Savings, Investments
+  💅 Lifestyle    Dining Out, Entertainment, Subscriptions, Shopping
+  ❤️ Personal     Health, Family, Gifts, Pets
+  🧰 Work         Software, Business Expenses, Taxes
+
+You can refine later into subcategories like:
+
+-   Groceries → Food Staples, Household Goods\
+-   Subscriptions → Streaming, Software Tools
+
+------------------------------------------------------------------------
+
+## 📊 Step 3: Categorize the Transactions
+
+Assign each transaction a category and add notes. Use a "Normalized
+Merchant" field to simplify naming (e.g., "Wal-Mart #203" → "Walmart").
+
+In Notion, add properties: Date, Merchant, Normalized Merchant, Amount,
+Category, Type, and Month.
+
+------------------------------------------------------------------------
+
+## 🧾 Step 4: Calculate Monthly Totals
+
+Create monthly summaries by Month and Category to see total income,
+spending, and savings rate.\
+In Notion: use Group by Month and Rollups.\
+In Sheets: use Pivot Tables.
+
+------------------------------------------------------------------------
+
+## 💡 Step 5: Establish Your Baseline Budget
+
+Average 3 months of spending to form your baseline.\
+Example:
+
+  Category        M1     M2     M3     Avg
+  --------------- ------ ------ ------ ------
+  Rent            1500   1500   1500   1500
+  Groceries       600    500    550    550
+  Subscriptions   80     95     90     88
+  Dining Out      200    250    150    200
+
+------------------------------------------------------------------------
+
+## 🎯 Step 6: Build the Zero-Based Budget
+
+List total income, then assign every dollar to a category until
+Remaining = 0.
+
+Example:
+
+  Category       Budgeted   Actual    Difference
+  -------------- ---------- --------- ------------
+  Income         5000       5050      +50
+  Rent           1500       1500      0
+  Groceries      550        580       -30
+  Dining Out     200        180       +20
+  Savings        1000       1000      0
+  Debt           300        300       0
+  Misc.          1450       1490      -40
+  **Leftover**   **0**      **+50**   ✅
+
+------------------------------------------------------------------------
+
+## 🔁 Step 7: Review & Adjust Each Month
+
+Compare budget vs actual, identify trends, and refine categories.
+
+------------------------------------------------------------------------
+
+## 🧠 Step 8: Automate (Optional)
+
+Use Notion formulas or Plaid → Sheets → Notion API for automation.
+
+------------------------------------------------------------------------
+
+## 📘 Optional: Create a Finance Dashboard in Notion
+
+Link your Transactions, Budget Plan, and Monthly Summary databases to
+visualize spending trends.
+
+------------------------------------------------------------------------
+
+### Budget Structure
+
+Each budget line has Title, Date, Category, Type, Planned, and Notes.
+
+Views: This Month, Oct--Dec 2025, 2026 All, Charts.
+
+------------------------------------------------------------------------
+
+### Monthly Workflow
+
+1.  Plan income and envelopes per category until balanced to zero.\
+2.  Track actuals in Transactions.\
+3.  Adjust mid-month intentionally.\
+4.  Close the month by comparing planned vs actual.
+
+------------------------------------------------------------------------
+
+### Transfers & Fees Policy
+
+Only record transfer fees as expenses. Exclude principal transfer legs.
+
+------------------------------------------------------------------------
+
+### Tips
+
+-   Keep categories short.\
+-   Use Notes for context.\
+-   Treat sinking funds as Savings envelopes.
+
+------------------------------------------------------------------------
+
+### FAQ
+
+**Do I need rollups?** No --- use filtered views.\
+**Irregular income?** Use a To Be Budgeted buffer.\
+**Annual bills?** Save ahead in months you can.
+
+------------------------------------------------------------------------
+
+**Links** - [Transactions
+DB](https://www.notion.so/82fc50e5b6b343a5a2ad1904f47404c0?pvs=21) -
+[Beth's
+Budget](https://www.notion.so/27e86edcae2c819da256e5c3772ee6a1?pvs=21) -
+[Bryan's
+Budget](https://www.notion.so/9a090afcdf174c1bb76d98d1a567f5d9?pvs=21)
