@@ -67,3 +67,5 @@ export const useFinanceData = () => {
 
   return {transactions, summary, loading};
 };
+
+export type {Transaction as FinanceTransaction, Summary as FinanceSummary};

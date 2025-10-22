@@ -3,6 +3,7 @@ import {TrendingUp, TrendingDown, DollarSign, PieChart, Bot, Wallet, Target, Mes
 import {useFinanceData} from '../hooks/useFinanceData';
 import {BudgetScreen} from './BudgetScreen';
 import {PlaidConnect} from './PlaidConnect';
+import AnalyticsScreen from './AnalyticsScreen';
 
 const FinancialDashboard = () => {
   const [activeScreen, setActiveScreen] = useState('dashboard');
@@ -270,6 +271,7 @@ const FinancialDashboard = () => {
           {activeScreen === 'dashboard' && <DashboardScreen />}
           {activeScreen === 'budget' && <BudgetScreen />}
           {activeScreen === 'plaid' && <PlaidConnect />}
+          {activeScreen === 'analytics' && <AnalyticsScreen transactions={transactions} summary={summary} />}
         </div>
       </div>
 

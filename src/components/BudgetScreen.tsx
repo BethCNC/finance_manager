@@ -277,9 +277,9 @@ export const BudgetScreen: React.FC = () => {
         </div>
 
         {/* Category Breakdown */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
+        <div>
           <h2 className="text-xl font-bold text-black mb-6">Category Breakdown</h2>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Object.entries(categoryGroups).map(([category, data]) => {
               const remaining = data.planned - data.actual;
               const percentUsed = data.planned > 0 ? (data.actual / data.planned) * 100 : 0;

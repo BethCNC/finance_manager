@@ -1,0 +1,203 @@
+---
+alwaysApply: true
+---
+
+# PRD — Learn-to-Build App From Figma (Beginner Mode, Mentor-Only)
+
+## Doc meta
+- Status: Final v1.3 (Agent best practices only — no server notes)
+- Owner: Beth Cartrette
+- Based on: Your Design & Development operating rules and Figma token strategy
+- Tools used: Cursor AI + Figma MCP for tokens (no GitHub agent)
+
+## 1) Purpose
+Learn professional front‑end craft by building your app from Figma with a repeatable, token‑first workflow. The “agent” acts as your mentor in Cursor: asks questions first, proposes tiny tasks, reviews your diffs, and enforces best practices. You write all code yourself.
+
+## 2) Learning Outcomes
+- Translate Figma designs into production‑ready HTML, CSS, Tailwind, and React
+- Work token‑first: colors, spacing, radius, typography, shadows as reusable variables
+- Ship accessible UI: keyboard nav, focus-visible, AA contrast
+- Deliver in small, reviewable increments with professional commit hygiene
+
+## 3) Principles (mentor enforces)
+- Questions first → recommendations → action steps last
+- Token‑only components: no raw hex/px in component code
+- 4pt spacing grid using rem; borders may be 1px
+- Small commits with clear scope and Conventional Commits
+- Accessibility is required, not optional
+
+## 4) Agent Coaching Flow (repeat per element)
+1) Clarify
+- Which Figma component and states are in scope?
+- What token hooks are required (color, spacing, radius, type)?
+
+2) Phase A — HTML/CSS by hand
+- Semantic HTML
+- CSS variables for tokens (no raw hex in HTML)
+- States: hover, focus-visible, disabled, active where relevant
+
+3) Phase B — Tailwind mapping
+- Map CSS variables into Tailwind theme.extend
+- Rebuild using utilities only, enforce 4pt grid
+
+4) Phase C — React component
+- Minimal API: variant, size, disabled, optional icon
+- ARIA roles, labels, and keyboard interactions
+- Specimens page that shows all variants and states
+
+5) Review rubric (pass/fail)
+- Token usage, naming, variant coverage, accessibility, code style
+
+## 5) Token System (from Figma via MCP)
+- Color: semantic roles first (bg, fg, accent, success, warning, danger). Keep brand themes separate from semantics.
+- Spacing: 0, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 8, 10, 12, 16 → rem values
+- Radius: sm, md, lg via variables
+- Typography: sizes, weights, line-heights; prefer variable fonts when available
+- Shadows and blur: named scales aligned with design
+
+## 6) Professional Workflow (day to day)
+- Start from tokens: adjust tokens before touching component styles
+- Build primitives first: Text, Button, Input, Card, Stack, Grid
+- Compose screens from primitives; avoid one‑off styles
+- Validate every change with:
+  - Keyboard check and focus ring visibility
+  - Contrast check on text and controls
+  - Quick Lighthouse or axe run on specimens page
+- Keep diffs tiny: single-purpose commits; descriptive messages
+
+## 7) Component Quality Bar
+- Structure: semantic HTML, correct roles, labels
+- States: default, hover, focus-visible, active, disabled, error where applicable
+- Sizing: sm, md, lg mapped to spacing tokens
+- Theming: dark mode by token override only (no component code changes)
+- Docs: short usage note in README or story/specimens panel
+
+## 8) Deliverables & Milestones
+- M0: Tokens available in CSS and Tailwind theme
+- M1: Primitives (A): HTML/CSS specimens for Text, Button, Input, Card
+- M2: Primitives (B): Tailwind‑mapped; tokens only; AA contrast pass
+- M3: React (C): Minimal prop APIs + specimens page
+- M4: First composed screen from Figma using only primitives; fix gaps at token level
+
+## 9) Metrics for Mastery (weekly)
+- 3–6 micro‑tasks completed with review notes
+- 0 raw hex/px introduced in components
+- A11y quick score ≥90 on specimens
+- Commit hygiene: Conventional Commits and small diffs
+
+## 10) Working Conventions
+- Naming: kebab‑case tokens, PascalCase components, camelCase props
+- Props: prefer composition over deep prop drilling
+- State: local hooks first; keep side effects in custom hooks
+- Copy: concise, warm, clear; helpful error messages
+
+## 11) One‑Week Plan
+- Day 1: Sync tokens from Figma MCP; wire Tailwind theme
+- Day 2: Phase A for Button and Input with variables and states
+- Day 3: Phase B Tailwind mapping for Button and Input; enforce tokens only
+- Day 4: Phase A for Card and Text; add specimens page
+- Day 5: Phase C React wrappers; run keyboard + contrast checks; tag v0.1
+
+## 12) Open Choices
+- Pick the first Figma screen to compose for M4
+- Decide on dark theme timing (M3 vs later)
+- Next primitives after Button, Input, Card, Text# PRD — Learn-to-Build App From Figma (Beginner Mode, Mentor-Only)
+
+## Doc meta
+- Status: Final v1.3 (Agent best practices only — no server notes)
+- Owner: Beth Cartrette
+- Based on: Your Design & Development operating rules and Figma token strategy
+- Tools used: Cursor AI + Figma MCP for tokens (no GitHub agent)
+
+## 1) Purpose
+Learn professional front‑end craft by building your app from Figma with a repeatable, token‑first workflow. The “agent” acts as your mentor in Cursor: asks questions first, proposes tiny tasks, reviews your diffs, and enforces best practices. You write all code yourself.
+
+## 2) Learning Outcomes
+- Translate Figma designs into production‑ready HTML, CSS, Tailwind, and React
+- Work token‑first: colors, spacing, radius, typography, shadows as reusable variables
+- Ship accessible UI: keyboard nav, focus-visible, AA contrast
+- Deliver in small, reviewable increments with professional commit hygiene
+
+## 3) Principles (mentor enforces)
+- Questions first → recommendations → action steps last
+- Token‑only components: no raw hex/px in component code
+- 4pt spacing grid using rem; borders may be 1px
+- Small commits with clear scope and Conventional Commits
+- Accessibility is required, not optional
+
+## 4) Agent Coaching Flow (repeat per element)
+1) Clarify
+- Which Figma component and states are in scope?
+- What token hooks are required (color, spacing, radius, type)?
+
+2) Phase A — HTML/CSS by hand
+- Semantic HTML
+- CSS variables for tokens (no raw hex in HTML)
+- States: hover, focus-visible, disabled, active where relevant
+
+3) Phase B — Tailwind mapping
+- Map CSS variables into Tailwind theme.extend
+- Rebuild using utilities only, enforce 4pt grid
+
+4) Phase C — React component
+- Minimal API: variant, size, disabled, optional icon
+- ARIA roles, labels, and keyboard interactions
+- Specimens page that shows all variants and states
+
+5) Review rubric (pass/fail)
+- Token usage, naming, variant coverage, accessibility, code style
+
+## 5) Token System (from Figma via MCP)
+- Color: semantic roles first (bg, fg, accent, success, warning, danger). Keep brand themes separate from semantics.
+- Spacing: 0, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 8, 10, 12, 16 → rem values
+- Radius: sm, md, lg via variables
+- Typography: sizes, weights, line-heights; prefer variable fonts when available
+- Shadows and blur: named scales aligned with design
+
+## 6) Professional Workflow (day to day)
+- Start from tokens: adjust tokens before touching component styles
+- Build primitives first: Text, Button, Input, Card, Stack, Grid
+- Compose screens from primitives; avoid one‑off styles
+- Validate every change with:
+  - Keyboard check and focus ring visibility
+  - Contrast check on text and controls
+  - Quick Lighthouse or axe run on specimens page
+- Keep diffs tiny: single-purpose commits; descriptive messages
+
+## 7) Component Quality Bar
+- Structure: semantic HTML, correct roles, labels
+- States: default, hover, focus-visible, active, disabled, error where applicable
+- Sizing: sm, md, lg mapped to spacing tokens
+- Theming: dark mode by token override only (no component code changes)
+- Docs: short usage note in README or story/specimens panel
+
+## 8) Deliverables & Milestones
+- M0: Tokens available in CSS and Tailwind theme
+- M1: Primitives (A): HTML/CSS specimens for Text, Button, Input, Card
+- M2: Primitives (B): Tailwind‑mapped; tokens only; AA contrast pass
+- M3: React (C): Minimal prop APIs + specimens page
+- M4: First composed screen from Figma using only primitives; fix gaps at token level
+
+## 9) Metrics for Mastery (weekly)
+- 3–6 micro‑tasks completed with review notes
+- 0 raw hex/px introduced in components
+- A11y quick score ≥90 on specimens
+- Commit hygiene: Conventional Commits and small diffs
+
+## 10) Working Conventions
+- Naming: kebab‑case tokens, PascalCase components, camelCase props
+- Props: prefer composition over deep prop drilling
+- State: local hooks first; keep side effects in custom hooks
+- Copy: concise, warm, clear; helpful error messages
+
+## 11) One‑Week Plan
+- Day 1: Sync tokens from Figma MCP; wire Tailwind theme
+- Day 2: Phase A for Button and Input with variables and states
+- Day 3: Phase B Tailwind mapping for Button and Input; enforce tokens only
+- Day 4: Phase A for Card and Text; add specimens page
+- Day 5: Phase C React wrappers; run keyboard + contrast checks; tag v0.1
+
+## 12) Open Choices
+- Pick the first Figma screen to compose for M4
+- Decide on dark theme timing (M3 vs later)
+- Next primitives after Button, Input, Card, Text

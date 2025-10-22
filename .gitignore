@@ -26,6 +26,10 @@ yarn-error.log*
 # Vercel
 .vercel
 
+# Next.js build files
+.next/
+out/
+
 /data
 
 .claude/settings.local.json

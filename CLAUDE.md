@@ -95,22 +95,28 @@ The `/api/notion` endpoint accepts a `type` query parameter:
 
 - `?type=transactions` - Returns combined income/expense transactions (last 20 of each)
 - `?type=summary` - Returns aggregated monthly totals from Months database
+- `?type=budget&year=YYYY&month=M` - Returns zero-based budget plan and actuals for specified period
 
 ### Notion Database Structure
 
-Three databases are used (IDs hard-coded in `api/notion.ts:8-10`):
+Four databases are used (IDs hard-coded in `api/notion.ts`):
 
 1. **Incomes** (`18986edc-ae2c-81b8-8f77-e19036368d99`)
-   - Properties: Name (title), Amount (number), Date (date), Months (relation)
+   - Properties: Name (title), Amount (number), Date (date), Months (relation), Category (select)
 
 2. **Expenses** (`18986edc-ae2c-815f-b56c-ed1964dccaf5`)
-   - Properties: Name (title), Amount (number), Date (date), Months (relation)
+   - Properties: Name (title), Amount (number), Date (date), Months (relation), Category (select)
 
 3. **Months** (`18986edc-ae2c-81ca-a41c-cde295ea544f`)
    - Properties:
      - `Incomes Amount` (rollup)
      - `Expenses amount` (rollup)
      - `Profite` (formula) - Note: typo in Notion property name
+
+4. **Budget Plan** (`18986edc-ae2c-8109-a7c4-f45ee1d5a3dd`)
+   - Properties: Title (title), Amount (number), Type (select), Category (select), Date (date), Notes (rich_text)
+   - Used for zero-based budgeting with planned income, expenses, savings, and debt payments
+   - Type options: "Income", "Expense", "Savings", "Debt"
 
 **Critical**: The Months database property is spelled "Profite" (not "Profit"). Do not change this in code without updating Notion.
 
@@ -125,9 +131,20 @@ Cards:       bg-white border-gray-200
 Text:        text-black (headings), text-gray-700 (body), text-gray-500 (metadata)
 Accent:      bg-black text-white (CTAs)
 Success:     text-emerald-600
+Warning:     text-yellow-600
 Error:       text-red-600
+Info:        text-blue-600
 Hover:       hover:border-black hover:bg-gray-800
 ```
+
+### Budget Category Colors
+The BudgetScreen uses a color-coded system with Tailwind 300-level colors. Categories are organized by theme:
+- **Housing** (red/orange/yellow): Housing, Mortgage, Utilities, Home
+- **Living** (lime/emerald/cyan): George, Food, Auto, Transport
+- **Personal** (blue/violet/fuchsia/pink): Entertainment, Health, Software, Personal Care
+- **Admin** (slate/neutral): Fees, Bank Fees, Uncategorized
+
+Each category has 4 color variants: `bg`, `text`, `border`, `accent` for consistent theming.
 
 ### Component Patterns
 ```typescript
@@ -159,6 +176,12 @@ page.properties['Incomes Amount']?.rollup?.number || 0
 
 // Formula property (from Months database - note the typo)
 page.properties['Profite']?.formula?.number || 0
+
+// Select property (Category)
+page.properties.Category?.select?.name || 'Uncategorized'
+
+// Rich text property (Notes in Budget Plan)
+page.properties.Notes?.rich_text?.[0]?.plain_text || ''
 ```
 
 ### Creating Pages
@@ -177,28 +200,34 @@ await notion.pages.create({
 ## Environment Variables
 
 - `NOTION_API_KEY` - Integration token from Notion (required for all API calls)
+- `PLAID_CLIENT_ID` - Plaid client ID (optional, for bank integration)
+- `PLAID_SECRET` - Plaid secret key (optional, for bank integration)
 - Stored in `.env.local` locally (NEVER commit this file)
 - Added to Vercel via `vercel env add NOTION_API_KEY`
 
-The integration must be connected to all three Notion databases for the app to function.
+The Notion integration must be connected to all four Notion databases for the app to function.
 
 ## Key Files
 
 - `api/notion.ts` - Serverless API endpoint, handles CORS, queries Notion databases
-- `src/hooks/useFinanceData.ts` - Data fetching hook with auto-refresh (30s interval at line 50)
+- `src/hooks/useFinanceData.ts` - Data fetching hook with auto-refresh (30s interval)
 - `src/components/FinancialDashboard.tsx` - Main UI component with navigation, metrics, and AI chat panel
+- `src/components/BudgetScreen.tsx` - Zero-based budgeting screen with category breakdown and progress tracking
+- `src/components/PlaidConnect.tsx` - Plaid bank connection component (optional integration)
 - `vercel.json` - Routing configuration for Vercel deployment
 - `.cursor/rules/` - Complete project documentation and patterns
 
 ## Current State
 
 - ✅ Core dashboard UI implemented
-- ✅ Notion integration working (3 databases)
+- ✅ Notion integration working (4 databases)
 - ✅ Real-time data sync (30s intervals)
 - ✅ Vercel serverless API layer
+- ✅ Zero-based budgeting with category tracking
+- ✅ Budget progress visualization with color-coded categories
 - ⏳ AI chat assistant (planned)
 - ⏳ Transaction creation form (planned)
-- ⏳ Budget visualization (planned)
+- ⏳ Plaid bank integration (optional)
 
 ## Security Rules
 

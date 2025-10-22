@@ -1,0 +1,455 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-white text-fg font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  /* Text Style Utilities */
+  .text-xs-black {
+    font-size: 12px;
+    font-family: Figtree;
+    font-weight: 900;
+    letter-spacing: 0em;
+  }
+  
+  .text-xs-bold {
+    font-size: 12px;
+    font-family: Figtree;
+    font-weight: 700;
+    letter-spacing: 0em;
+  }
+  
+  .text-xs-extra-bold {
+    font-size: 12px;
+    font-family: Figtree;
+    font-weight: 800;
+    letter-spacing: 0em;
+  }
+  
+  .text-xs-extra-light {
+    font-size: 12px;
+    font-family: Figtree;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 0em;
+  }
+  
+  .text-xs-light {
+    font-size: 12px;
+    font-family: Figtree;
+    font-style: italic;
+    letter-spacing: 0em;
+  }
+  
+  .text-xs-medium {
+    font-size: 12px;
+    font-family: Figtree;
+    font-weight: 500;
+    letter-spacing: 0em;
+  }
+  
+  .text-xs-regular {
+    font-size: 12px;
+    font-family: Figtree;
+    font-weight: 400;
+    letter-spacing: 0em;
+  }
+  
+  .text-xs-semi-bold {
+    font-size: 12px;
+    font-family: Figtree;
+    font-weight: 600;
+    letter-spacing: 0em;
+  }
+  
+  .text-sm-black {
+    font-size: 14px;
+    font-family: Figtree;
+    font-weight: 900;
+    letter-spacing: 0em;
+  }
+  
+  .text-sm-bold {
+    font-size: 14px;
+    font-family: Figtree;
+    font-weight: 700;
+    letter-spacing: 0em;
+  }
+  
+  .text-sm-extra-bold {
+    font-size: 14px;
+    font-family: Figtree;
+    font-weight: 800;
+    letter-spacing: 0em;
+  }
+  
+  .text-sm-extra-light {
+    font-size: 14px;
+    font-family: Figtree;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 0em;
+  }
+  
+  .text-sm-light {
+    font-size: 14px;
+    font-family: Figtree;
+    font-style: italic;
+    letter-spacing: 0em;
+  }
+  
+  .text-sm-medium {
+    font-size: 14px;
+    font-family: Figtree;
+    font-weight: 500;
+    letter-spacing: 0em;
+  }
+  
+  .text-sm-regular {
+    font-size: 14px;
+    font-family: Figtree;
+    font-weight: 400;
+    letter-spacing: 0em;
+  }
+  
+  .text-sm-semi-bold {
+    font-size: 14px;
+    font-family: Figtree;
+    font-weight: 600;
+    letter-spacing: 0em;
+  }
+  
+  .text-base-black {
+    font-size: 16px;
+    font-family: Figtree;
+    font-weight: 900;
+    letter-spacing: 0em;
+  }
+  
+  .text-base-bold {
+    font-size: 16px;
+    font-family: Figtree;
+    font-weight: 700;
+    letter-spacing: 0em;
+  }
+  
+  .text-base-extra-bold {
+    font-size: 16px;
+    font-family: Figtree;
+    font-weight: 800;
+    letter-spacing: 0em;
+  }
+  
+  .text-base-extra-light {
+    font-size: 16px;
+    font-family: Figtree;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 0em;
+  }
+  
+  .text-base-light {
+    font-size: 16px;
+    font-family: Figtree;
+    font-style: italic;
+    letter-spacing: 0em;
+  }
+  
+  .text-base-medium {
+    font-size: 16px;
+    font-family: Figtree;
+    font-weight: 500;
+    letter-spacing: 0em;
+  }
+  
+  .text-base-regular {
+    font-size: 16px;
+    font-family: Figtree;
+    font-weight: 400;
+    letter-spacing: 0em;
+  }
+  
+  .text-base-semi-bold {
+    font-size: 16px;
+    font-family: Figtree;
+    font-weight: 600;
+    letter-spacing: 0em;
+  }
+  
+  .text-lg-black {
+    font-size: 18px;
+    font-family: Figtree;
+    font-weight: 900;
+    letter-spacing: 0em;
+  }
+  
+  .text-lg-bold {
+    font-size: 18px;
+    font-family: Figtree;
+    font-weight: 700;
+    letter-spacing: 0em;
+  }
+  
+  .text-lg-extra-bold {
+    font-size: 18px;
+    font-family: Figtree;
+    font-weight: 800;
+    letter-spacing: 0em;
+  }
+  
+  .text-lg-medium {
+    font-size: 18px;
+    font-family: Figtree;
+    font-weight: 500;
+    letter-spacing: 0em;
+  }
+  
+  .text-lg-regular {
+    font-size: 18px;
+    font-family: Figtree;
+    font-weight: 400;
+    letter-spacing: 0em;
+  }
+  
+  .text-lg-semi-bold {
+    font-size: 18px;
+    font-family: Figtree;
+    font-weight: 600;
+    letter-spacing: 0em;
+  }
+  
+  .text-xl-black {
+    font-size: 20px;
+    font-family: Figtree;
+    font-weight: 900;
+    letter-spacing: 0em;
+  }
+  
+  .text-xl-bold {
+    font-size: 20px;
+    font-family: Figtree;
+    font-weight: 700;
+    letter-spacing: 0em;
+  }
+  
+  .text-xl-extra-bold {
+    font-size: 20px;
+    font-family: Figtree;
+    font-weight: 800;
+    letter-spacing: 0em;
+  }
+  
+  .text-xl-medium {
+    font-size: 20px;
+    font-family: Figtree;
+    font-weight: 500;
+    letter-spacing: 0em;
+  }
+  
+  .text-xl-regular {
+    font-size: 20px;
+    font-family: Figtree;
+    font-weight: 400;
+    letter-spacing: 0em;
+  }
+  
+  .text-xl-semi-bold {
+    font-size: 20px;
+    font-family: Figtree;
+    font-weight: 600;
+    letter-spacing: 0em;
+  }
+  
+  .text-2xl-black {
+    font-size: 24px;
+    font-family: Figtree;
+    font-weight: 900;
+    letter-spacing: 0em;
+  }
+  
+  .text-2xl-bold {
+    font-size: 24px;
+    font-family: Figtree;
+    font-weight: 700;
+    letter-spacing: 0em;
+  }
+  
+  .text-2xl-extra-bold {
+    font-size: 24px;
+    font-family: Figtree;
+    font-weight: 800;
+    letter-spacing: 0em;
+  }
+  
+  .text-2xl-medium {
+    font-size: 24px;
+    font-family: Figtree;
+    font-weight: 500;
+    letter-spacing: 0em;
+  }
+  
+  .text-2xl-regular {
+    font-size: 24px;
+    font-family: Figtree;
+    font-weight: 400;
+    letter-spacing: 0em;
+  }
+  
+  .text-2xl-semi-bold {
+    font-size: 24px;
+    font-family: Figtree;
+    font-weight: 600;
+    letter-spacing: 0em;
+  }
+  
+  .text-3xl-black {
+    font-size: 30px;
+    font-family: Figtree;
+    font-weight: 900;
+    letter-spacing: 0em;
+  }
+  
+  .text-3xl-bold {
+    font-size: 30px;
+    font-family: Figtree;
+    font-weight: 700;
+    letter-spacing: 0em;
+  }
+  
+  .text-3xl-extra-bold {
+    font-size: 30px;
+    font-family: Figtree;
+    font-weight: 800;
+    letter-spacing: 0em;
+  }
+  
+  .text-3xl-medium {
+    font-size: 30px;
+    font-family: Figtree;
+    font-weight: 500;
+    letter-spacing: 0em;
+  }
+  
+  .text-3xl-regular {
+    font-size: 30px;
+    font-family: Figtree;
+    font-weight: 400;
+    letter-spacing: 0em;
+  }
+  
+  .text-3xl-semi-bold {
+    font-size: 30px;
+    font-family: Figtree;
+    font-weight: 600;
+    letter-spacing: 0em;
+  }
+  
+  .text-4xl-black {
+    font-size: 36px;
+    font-family: Figtree;
+    font-weight: 900;
+    letter-spacing: 0em;
+  }
+  
+  .text-4xl-bold {
+    font-size: 36px;
+    font-family: Figtree;
+    font-weight: 700;
+    letter-spacing: 0em;
+  }
+  
+  .text-4xl-extra-bold {
+    font-size: 36px;
+    font-family: Figtree;
+    font-weight: 800;
+    letter-spacing: 0em;
+  }
+  
+  .text-4xl-medium {
+    font-size: 36px;
+    font-family: Figtree;
+    font-weight: 500;
+    letter-spacing: 0em;
+  }
+  
+  .text-4xl-regular {
+    font-size: 36px;
+    font-family: Figtree;
+    font-weight: 400;
+    letter-spacing: 0em;
+  }
+  
+  .text-4xl-semi-bold {
+    font-size: 36px;
+    font-family: Figtree;
+    font-weight: 600;
+    letter-spacing: 0em;
+  }
+  
+  .text-5xl-black {
+    font-size: 48px;
+    font-family: Figtree;
+    font-weight: 900;
+    letter-spacing: 0em;
+  }
+  
+  .text-5xl-bold {
+    font-size: 48px;
+    font-family: Figtree;
+    font-weight: 700;
+    letter-spacing: 0em;
+  }
+  
+  .text-5xl-extra-bold {
+    font-size: 48px;
+    font-family: Figtree;
+    font-weight: 800;
+    letter-spacing: 0em;
+  }
+  
+  .text-5xl-medium {
+    font-size: 48px;
+    font-family: Figtree;
+    font-weight: 500;
+    letter-spacing: 0em;
+  }
+  
+  .text-5xl-regular {
+    font-size: 48px;
+    font-family: Figtree;
+    font-weight: 400;
+    letter-spacing: 0em;
+  }
+  
+  .text-5xl-semi-bold {
+    font-size: 48px;
+    font-family: Figtree;
+    font-weight: 600;
+    letter-spacing: 0em;
+  }
+  
+  /* Smooth Scrolling */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom Gradient Utilities */
+  .gradient-green-pink {
+    background: linear-gradient(to right, rgb(220, 252, 231), rgb(252, 231, 243));
+  }
+  
+  .gradient-yellow-pink {
+    background: linear-gradient(to right, rgb(254, 249, 195), rgb(252, 231, 243));
+  }
+}
