@@ -7,6 +7,89 @@ import TransactionForm from './TransactionForm';
 import TransactionEditModal from './TransactionEditModal';
 import {TrendingUp, TrendingDown, Check, Plus, MoreVertical, CheckSquare, Square, Trash2, Tag, RefreshCw} from 'lucide-react';
 
+// Transaction Item Component to handle individual swipe gestures
+const TransactionItem: React.FC<{
+  transaction: any;
+  isBulkMode: boolean;
+  selectedTransactions: Set<string>;
+  onToggleSelection: (id: string) => void;
+  onDelete: (id: string) => void;
+  onToggleBusinessFlag: (id: string) => void;
+}> = ({transaction, isBulkMode, selectedTransactions, onToggleSelection, onDelete, onToggleBusinessFlag}) => {
+  const swipeGesture = useSwipeGesture({
+    onSwipeLeft: () => onDelete(transaction.id),
+    onSwipeRight: () => onToggleBusinessFlag(transaction.id),
+    threshold: 50
+  });
+
+  return (
+    <div
+      className={`bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 transition-transform`}
+      {...swipeGesture}
+    >
+      {/* Bulk Selection Checkbox */}
+      {isBulkMode && (
+        <div className="flex-shrink-0">
+          <button
+            onClick={() => onToggleSelection(transaction.id)}
+            className="w-5 h-5 flex items-center justify-center"
+          >
+            {selectedTransactions.has(transaction.id) ? (
+              <CheckSquare className="w-5 h-5 text-blue-600" />
+            ) : (
+              <Square className="w-5 h-5 text-gray-400 border border-gray-300 rounded" />
+            )}
+          </button>
+        </div>
+      )}
+
+      {/* Merchant Icon */}
+      <div className={`w-12 h-12 ${transaction.iconBg} rounded-full flex items-center justify-center flex-shrink-0`}>
+        <span className="text-white font-bold text-lg">
+          {transaction.icon}
+        </span>
+      </div>
+
+      {/* Transaction Details */}
+      <div className="flex-1 min-w-0">
+        <p className="font-semibold text-black text-base">
+          {transaction.name}
+        </p>
+        <p className="text-sm text-gray-500">
+          {transaction.category}
+        </p>
+      </div>
+
+      {/* Amount and Date */}
+      <div className="text-right">
+        <p className="font-semibold text-black text-base">
+          -${Math.abs(transaction.amount).toFixed(2)}
+        </p>
+        <p className="text-xs text-gray-500">
+          {transaction.date}
+        </p>
+      </div>
+
+      {/* Edit/Delete Actions - Only show when not in bulk mode */}
+      {!isBulkMode && (
+        <div className="flex-shrink-0">
+          <TransactionEditModal
+            transaction={transaction}
+            onEdit={() => {
+              // Refresh data after edit
+              window.location.reload();
+            }}
+            onDelete={() => {
+              // Refresh data after delete
+              window.location.reload();
+            }}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
 interface Transaction {
   id: string;
   name: string;
@@ -56,26 +139,6 @@ const TransactionsPage = () => {
   const [selectedTransactions, setSelectedTransactions] = useState<Set<string>>(new Set());
   const [isBulkMode, setIsBulkMode] = useState(false);
   const [isBulkDeleting, setIsBulkDeleting] = useState(false);
-  const [swipedTransaction, setSwipedTransaction] = useState<string | null>(null);
-
-  // Mobile gestures
-  const swipeGesture = useSwipeGesture({
-    onSwipeLeft: (transactionId) => {
-      if (transactionId && !isBulkMode) {
-        // Show delete confirmation for swiped transaction
-        const confirmed = window.confirm('Delete this transaction?');
-        if (confirmed) {
-          handleDeleteTransaction(transactionId);
-        }
-      }
-    },
-    onSwipeRight: (transactionId) => {
-      if (transactionId && !isBulkMode) {
-        // Mark as reviewed or toggle business flag
-        handleToggleBusinessFlag(transactionId);
-      }
-    }
-  });
 
   const pullToRefresh = usePullToRefresh({
     onRefresh: async () => {
@@ -507,83 +570,20 @@ const TransactionsPage = () => {
 
         {/* Transaction List */}
         <div 
-          ref={pullToRefresh.ref}
           className="space-y-3"
           {...pullToRefresh}
           {...longPress}
         >
           {filteredTransactions.map((transaction) => (
-            <div
+            <TransactionItem
               key={transaction.id}
-              className={`bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 transition-transform ${
-                swipedTransaction === transaction.id ? 'scale-95' : ''
-              }`}
-              {...useSwipeGesture({
-                onSwipeLeft: () => handleDeleteTransaction(transaction.id),
-                onSwipeRight: () => handleToggleBusinessFlag(transaction.id),
-                threshold: 50
-              })}
-            >
-              {/* Bulk Selection Checkbox */}
-              {isBulkMode && (
-                <div className="flex-shrink-0">
-                  <button
-                    onClick={() => toggleTransactionSelection(transaction.id)}
-                    className="w-5 h-5 flex items-center justify-center"
-                  >
-                    {selectedTransactions.has(transaction.id) ? (
-                      <CheckSquare className="w-5 h-5 text-blue-600" />
-                    ) : (
-                      <Square className="w-5 h-5 text-gray-400 border border-gray-300 rounded" />
-                    )}
-                  </button>
-                </div>
-              )}
-
-              {/* Merchant Icon */}
-              <div className={`w-12 h-12 ${transaction.iconBg} rounded-full flex items-center justify-center flex-shrink-0`}>
-                <span className="text-white font-bold text-lg">
-                  {transaction.icon}
-                </span>
-              </div>
-
-              {/* Transaction Details */}
-              <div className="flex-1 min-w-0">
-                <p className="font-semibold text-black text-base">
-                  {transaction.name}
-                </p>
-                <p className="text-sm text-gray-500">
-                  {transaction.category}
-                </p>
-              </div>
-
-              {/* Amount and Date */}
-              <div className="text-right">
-                <p className="font-semibold text-black text-base">
-                  -${Math.abs(transaction.amount).toFixed(2)}
-                </p>
-                <p className="text-xs text-gray-500">
-                  {transaction.date}
-                </p>
-              </div>
-
-              {/* Edit/Delete Actions - Only show when not in bulk mode */}
-              {!isBulkMode && (
-                <div className="flex-shrink-0">
-                  <TransactionEditModal
-                    transaction={transaction}
-                    onEdit={() => {
-                      // Refresh data after edit
-                      window.location.reload();
-                    }}
-                    onDelete={() => {
-                      // Refresh data after delete
-                      window.location.reload();
-                    }}
-                  />
-                </div>
-              )}
-            </div>
+              transaction={transaction}
+              isBulkMode={isBulkMode}
+              selectedTransactions={selectedTransactions}
+              onToggleSelection={toggleTransactionSelection}
+              onDelete={handleDeleteTransaction}
+              onToggleBusinessFlag={handleToggleBusinessFlag}
+            />
           ))}
         </div>
 

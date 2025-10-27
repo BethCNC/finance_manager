@@ -1,5 +1,5 @@
 // API error handling and retry utilities
-import { ErrorHandler } from './errorHandler';
+import ErrorHandler from './errorHandler';
 
 interface ApiError extends Error {
   status?: number;

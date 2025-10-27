@@ -98,7 +98,7 @@ export const usePullToRefresh = (options: PullToRefreshOptions) => {
   
   const startY = useRef(0);
   const currentY = useRef(0);
-  const elementRef = useRef<HTMLElement>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (elementRef.current?.scrollTop === 0) {

@@ -1,4 +1,5 @@
 // Bundle analysis and optimization utilities
+import React from 'react';
 import { performance } from 'perf_hooks';
 
 interface BundleAnalysis {
