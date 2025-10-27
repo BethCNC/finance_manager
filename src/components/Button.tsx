@@ -42,46 +42,48 @@ const Button: React.FC<ButtonProps> = ({
     shadow-[0px_1px_1px_0px_rgba(0,0,0,0.06)]
   `.replace(/\s+/g, ' ').trim();
 
-  // Variant styles - EXACT match to Figma design variables
+  // Variant styles - Using semantic tokens from Figma
   const variantStyles = {
-    // Solid: Brand / bg/bg-solid (#1E293B) with text-inverse-hover (#FAFAFA)
-    // Hover: bg-solid-hover (#334155), Active: bg-solid-active (#0F172A)
+    // Solid: Brand / bg/bg-solid with text-inverse
+    // Uses: --brand-bg-bg-solid, --brand-fg-text-inverse
     solid: `
-      bg-[#1E293B] text-[#FAFAFA]
-      hover:bg-[#334155] hover:text-[#FCFCFC]
-      active:bg-[#0F172A] active:text-[#FCFCFC]
+      bg-bg-bg-solid text-fg-text-inverse
+      hover:bg-bg-bg-solid-hover
+      active:bg-bg-bg-solid-active
     `.replace(/\s+/g, ' ').trim(),
 
-    // Color: Brand / primary/bg (#BFDBFE) with fg/text (#404040)
+    // Color: Brand / primary/bg with fg/text
+    // Uses: --brand-primary-bg, --brand-fg-text
     color: `
-      bg-[#BFDBFE] text-[#404040]
-      hover:bg-[#93C5FD] hover:text-[#262626]
-      active:bg-[#60A5FA] active:text-[#262626]
+      bg-primary-bg text-fg-text
+      hover:bg-primary-bg-hover hover:text-fg-text-contrast
+      active:bg-primary-bg-active active:text-fg-text-contrast
     `.replace(/\s+/g, ' ').trim(),
 
-    // Surface: Brand / bg/bg (#F1F5F9) with border (#A3A3A3) and fg/text (#404040)
-    // Stroke: Inside, 1px weight
+    // Surface: Brand / bg/bg with border and fg/text
+    // Uses: --brand-bg-bg, --brand-fg-border, --brand-fg-text
     surface: `
-      bg-[#F1F5F9] text-[#404040]
-      border border-[#A3A3A3]
-      hover:bg-[#E2E8F0]
-      active:bg-[#CBD5E1] active:border-[#737373]
+      bg-bg-bg text-fg-text
+      border border-fg-border
+      hover:bg-bg-bg-hover
+      active:bg-bg-bg-active active:border-fg-border-hover
     `.replace(/\s+/g, ' ').trim(),
 
-    // Outline: Transparent bg with fg/text border (#404040)
-    // Stroke: Inside, 1px weight
+    // Outline: Transparent bg with fg/text border
+    // Uses: --brand-fg-text, --brand-primary-solid
     outline: `
-      bg-transparent text-[#404040]
-      border border-[#404040]
-      hover:text-[#3B82F6] hover:border-[#3B82F6]
-      active:text-[#2563EB] active:border-[#1D4ED8]
+      bg-transparent text-fg-text
+      border border-fg-text
+      hover:text-primary-solid hover:border-primary-solid
+      active:text-primary-solid-hover active:border-primary-border-hover
     `.replace(/\s+/g, ' ').trim(),
 
-    // Ghost: Transparent bg, no border, fg/text (#404040)
+    // Ghost: Transparent bg, no border, fg/text
+    // Uses: --brand-fg-text, --brand-primary-solid
     ghost: `
-      bg-transparent text-[#404040]
-      hover:text-[#3B82F6]
-      active:text-[#2563EB]
+      bg-transparent text-fg-text
+      hover:text-primary-solid
+      active:text-primary-solid-hover
     `.replace(/\s+/g, ' ').trim()
   };
 

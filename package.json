@@ -39,9 +39,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run tokens:build && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "tokens:build": "node scripts/transform-tokens.js",
+    "tokens:watch": "nodemon --watch tokens.json --exec npm run tokens:build"
   },
   "eslintConfig": {
     "extends": [

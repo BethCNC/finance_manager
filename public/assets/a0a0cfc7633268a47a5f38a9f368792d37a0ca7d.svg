@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Vector">
+<path d="M14 11C15.6569 11 17 9.65685 17 8C17 6.34315 15.6569 5 14 5C12.3431 5 11 6.34315 11 8C11 9.65685 12.3431 11 14 11Z" stroke="var(--stroke-0, #334155)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14 1H8C4.13401 1 1 4.13401 1 8C1 11.866 4.13401 15 8 15H14C17.866 15 21 11.866 21 8C21 4.13401 17.866 1 14 1Z" stroke="var(--stroke-0, #334155)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

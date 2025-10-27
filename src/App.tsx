@@ -2,59 +2,23 @@ import React, {useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {Menu} from 'lucide-react';
 import FinancialDashboard from './components/FinancialDashboard';
+import DashboardPage from './components/DashboardPage';
 import {BudgetScreen} from './components/BudgetScreen';
+import BudgetPage from './components/BudgetPage';
+import AccountsScreen from './components/AccountsScreen';
+import EnhancedAccountsScreen from './components/EnhancedAccountsScreen';
+import TransactionsPage from './components/TransactionsPage';
+import AdvisorPage from './components/AdvisorPage';
+import SubscriptionsPage from './components/SubscriptionsPage';
+import MonthlyBillsPage from './components/MonthlyBillsPage';
+import {AIDataProcessor} from './components/AIDataProcessor';
 import BottomNav from './components/BottomNav';
 import MenuDrawer from './components/MenuDrawer';
 import TextSpecimens from './components/TextSpecimens';
 import ColorSpecimens from './components/ColorSpecimens';
-import ButtonShowcase from './components/ButtonShowcase';
 import ButtonTest from './components/ButtonTest';
 
-// Placeholder components for routes
-const TransactionsPage = () => (
-  <div className="min-h-screen bg-gray-50 pb-24">
-    <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold text-black mb-4">Transactions</h1>
-      <p className="text-gray-700">Transaction list coming soon...</p>
-    </div>
-  </div>
-);
-
-const AdvisorPage = () => (
-  <div className="min-h-screen bg-gray-50 pb-24">
-    <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold text-black mb-4">AI Advisor</h1>
-      <p className="text-gray-700">AI financial advisor coming soon...</p>
-    </div>
-  </div>
-);
-
-const SubscriptionsPage = () => (
-  <div className="min-h-screen bg-gray-50 pb-24">
-    <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold text-black mb-4">Subscriptions</h1>
-      <p className="text-gray-700">Subscription management coming soon...</p>
-    </div>
-  </div>
-);
-
-const BillsPage = () => (
-  <div className="min-h-screen bg-gray-50 pb-24">
-    <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold text-black mb-4">Bills</h1>
-      <p className="text-gray-700">Bill tracking coming soon...</p>
-    </div>
-  </div>
-);
-
-const SettingsPage = () => (
-  <div className="min-h-screen bg-gray-50 pb-24">
-    <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold text-black mb-4">Settings</h1>
-      <p className="text-gray-700">Settings coming soon...</p>
-    </div>
-  </div>
-);
+// Final 8 Pages - All components built and integrated
 
 function AppLayout({children}: {children: React.ReactNode}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -93,65 +57,67 @@ function App() {
         {/* Specimen routes without layout */}
         <Route path="/specimens/text" element={<TextSpecimens />} />
         <Route path="/specimens/color" element={<ColorSpecimens />} />
-        <Route path="/specimens/button" element={<ButtonShowcase />} />
+        <Route path="/specimens/button" element={<ButtonTest />} />
         <Route path="/test/button" element={<ButtonTest />} />
 
-        {/* Main app routes with layout */}
+        {/* Final 8 Pages - Main App Routes */}
+        {/* Dashboard - Homepage */}
         <Route
           path="/"
-          element={
-            <AppLayout>
-              <FinancialDashboard />
-            </AppLayout>
-          }
+          element={<DashboardPage />}
         />
+        {/* Accounts */}
+        <Route
+          path="/accounts"
+          element={<EnhancedAccountsScreen />}
+        />
+        {/* Transactions */}
         <Route
           path="/transactions"
-          element={
-            <AppLayout>
-              <TransactionsPage />
-            </AppLayout>
-          }
+          element={<TransactionsPage />}
         />
+        {/* Advisor */}
+        <Route
+          path="/advisor"
+          element={<AdvisorPage />}
+        />
+        {/* Budget */}
         <Route
           path="/budget"
+          element={<BudgetPage />}
+        />
+        {/* Budget Legacy */}
+        <Route
+          path="/budget-legacy"
           element={
             <AppLayout>
               <BudgetScreen />
             </AppLayout>
           }
         />
-        <Route
-          path="/advisor"
-          element={
-            <AppLayout>
-              <AdvisorPage />
-            </AppLayout>
-          }
-        />
+        {/* Subscriptions */}
         <Route
           path="/subscriptions"
-          element={
-            <AppLayout>
-              <SubscriptionsPage />
-            </AppLayout>
-          }
+          element={<SubscriptionsPage />}
+        />
+        {/* Monthly Bills */}
+        <Route
+          path="/monthly-bills"
+          element={<MonthlyBillsPage />}
+        />
+
+        {/* Legacy/Development Routes */}
+        <Route
+          path="/dashboard-legacy"
+          element={<FinancialDashboard />}
         />
         <Route
-          path="/bills"
-          element={
-            <AppLayout>
-              <BillsPage />
-            </AppLayout>
-          }
+          path="/accounts-legacy"
+          element={<AccountsScreen />}
         />
         <Route
-          path="/settings"
-          element={
-            <AppLayout>
-              <SettingsPage />
-            </AppLayout>
-          }
+          path="/ai-processor"
+          element={<AIDataProcessor />}
         />
       </Routes>
     </Router>

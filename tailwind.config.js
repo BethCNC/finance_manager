@@ -1,4 +1,8 @@
 /** @type {import('tailwindcss').Config} */
+
+// Import auto-generated tokens from tokens.json
+const tokenConfig = require('./src/tokens.tailwind.json');
+
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -35,167 +39,10 @@ module.exports = {
         extrabold: '800',
         black: '900'
       },
+      // Merge token-based colors from Figma
       colors: {
-        // Custom Design System Colors
-        bryan: {
-          'bg-subtle': 'rgb(239, 246, 255)',
-          DEFAULT: 'rgb(219, 234, 254)',
-          'bg-hover': 'rgb(147, 197, 253)',
-          'bg-active': 'rgb(96, 165, 250)',
-          'line': 'rgb(183, 217, 248)',
-          'border': 'rgb(150, 199, 242)',
-          'border-hover': 'rgb(94, 176, 239)',
-          'solid': 'rgb(147, 197, 253)',
-          'solid-hover': 'rgb(0, 129, 241)',
-          'text': 'rgb(0, 106, 220)',
-          'on-bryan': 'rgb(255, 255, 255)',
-          'border-dark': 'rgb(30, 64, 175)'
-        },
-        beth: {
-          'on-beth': 'rgb(255, 255, 255)',
-          'text': 'rgb(192, 38, 211)',
-          'solid-hover': 'rgb(240, 171, 252)',
-          'solid': 'rgb(232, 121, 249)',
-          'border-hover': 'rgb(217, 70, 239)',
-          'border': 'rgb(232, 121, 249)',
-          'line': 'rgb(192, 38, 211)',
-          'bg-active': 'rgb(245, 208, 254)',
-          'bg-hover': 'rgb(240, 171, 252)',
-          'bg': 'rgb(250, 232, 255)',
-          'bg-subtle': 'rgb(253, 244, 255)'
-        },
-        bg: {
-          DEFAULT: 'rgb(255, 255, 255)',
-          'base': 'rgb(252, 252, 253)',
-          'subtle': 'rgb(249, 249, 251)',
-          'hover': 'rgb(71, 85, 105)',
-          'active': 'rgb(100, 116, 139)',
-          'solid': 'rgb(15, 23, 42)',
-          'secondary': 'rgb(226, 232, 240)'
-        },
-        fg: {
-          DEFAULT: 'rgb(10, 10, 10)',
-          'line': 'rgb(216, 217, 224)',
-          'border': 'rgb(205, 206, 215)',
-          'border-hover': 'rgb(185, 190, 198)',
-          'solid': 'rgb(139, 141, 152)',
-          'solid-hover': 'rgb(128, 130, 141)',
-          'text': 'rgb(82, 82, 82)',
-          'text-contrast': 'rgb(38, 38, 38)',
-          'primary': 'rgb(23, 23, 23)',
-          'on-primary': 'rgb(250, 250, 250)',
-          'invisible': 'rgb(0, 0, 0)',
-          'button-transparent': 'rgba(255, 255, 255, 0)'
-        },
-        disabled: {
-          DEFAULT: 'rgb(205, 206, 215)',
-          'on-disabled': 'rgb(185, 190, 198)'
-        },
-        primary: {
-          'base': 'rgb(252, 252, 254)',
-          'bg-subtle': 'rgb(248, 249, 253)',
-          'bg': 'rgb(239, 240, 246)',
-          'bg-hover': 'rgb(230, 232, 240)',
-          'bg-active': 'rgb(223, 224, 235)',
-          'line': 'rgb(215, 217, 229)',
-          'border': 'rgb(229, 231, 235)',
-          'border-hover': 'rgb(184, 186, 206)',
-          'solid': 'rgb(18, 19, 28)',
-          'solid-hover': 'rgb(42, 43, 53)',
-          'text': 'rgb(97, 99, 115)',
-          'text-contrast': 'rgb(30, 31, 40)',
-          'on-primary': 'rgb(255, 255, 255)'
-        },
-        success: {
-          'bg-subtle': 'rgb(240, 253, 244)',
-          DEFAULT: 'rgb(217, 251, 219)',
-          'bg-hover': 'rgb(206, 245, 208)',
-          'bg-active': 'rgb(196, 238, 199)',
-          'line': 'rgb(181, 233, 185)',
-          'border': 'rgb(170, 222, 174)',
-          'border-hover': 'rgb(140, 206, 146)',
-          'solid': 'rgb(40, 167, 69)',
-          'solid-hover': 'rgb(13, 156, 57)',
-          'text': 'rgb(0, 123, 26)',
-          'text-contrast': 'rgb(0, 43, 0)',
-          'on-success': 'rgb(255, 255, 255)'
-        },
-        warning: {
-          'bg-subtle': 'rgb(255, 251, 235)',
-          DEFAULT: 'rgb(254, 243, 199)',
-          'bg-hover': 'rgb(253, 230, 138)',
-          'bg-active': 'rgb(252, 211, 77)',
-          'line': 'rgb(251, 191, 36)',
-          'border': 'rgb(245, 158, 11)',
-          'border-hover': 'rgb(235, 188, 0)',
-          'solid': 'rgb(245, 158, 11)',
-          'solid-hover': 'rgb(217, 119, 6)',
-          'text': 'rgb(119, 52, 14)',
-          'on-warning': 'rgb(0, 0, 0)'
-        },
-        alert: {
-          'bg-subtle': 'rgb(255, 248, 247)',
-          DEFAULT: 'rgb(255, 240, 238)',
-          'bg-hover': 'rgb(255, 230, 226)',
-          'bg-active': 'rgb(253, 216, 211)',
-          'line': 'rgb(250, 199, 190)',
-          'border': 'rgb(243, 176, 162)',
-          'border-hover': 'rgb(234, 146, 128)',
-          'solid': 'rgb(229, 77, 46)',
-          'solid-hover': 'rgb(219, 67, 36)',
-          'text': 'rgb(202, 50, 20)',
-          'on-alert': 'rgb(255, 255, 255)'
-        },
-        overlay: {
-          'dark-100': 'rgba(0, 0, 0, 0)',
-          'dark-200': 'rgba(0, 0, 0, 0)',
-          'dark-300': 'rgba(0, 0, 0, 0.1)',
-          'dark-400': 'rgba(0, 0, 0, 0.1)',
-          'dark-500': 'rgba(0, 0, 0, 0.1)',
-          'dark-600': 'rgba(0, 0, 0, 0.1)',
-          'dark-700': 'rgba(0, 0, 0, 0.2)',
-          'dark-800': 'rgba(0, 0, 0, 0.4)',
-          'dark-900': 'rgba(0, 0, 0, 0.5)',
-          'dark-1000': 'rgba(0, 0, 0, 0.6)',
-          'dark-1100': 'rgba(0, 0, 0, 0.9)',
-          'light-100': 'rgba(255, 255, 255, 1)',
-          'light-200': 'rgba(255, 255, 255, 0)',
-          'light-300': 'rgba(255, 255, 255, 0)',
-          'light-400': 'rgba(255, 255, 255, 0.1)',
-          'light-500': 'rgba(255, 255, 255, 0.1)',
-          'light-600': 'rgba(255, 255, 255, 0.1)',
-          'light-700': 'rgba(255, 255, 255, 0.2)',
-          'light-800': 'rgba(255, 255, 255, 0.3)',
-          'light-900': 'rgba(255, 255, 255, 0.4)',
-          'light-1000': 'rgba(255, 255, 255, 0.4)',
-          'light-1100': 'rgba(255, 255, 255, 0.6)',
-          'light-1200': 'rgba(255, 255, 255, 0.9)'
-        },
-        category: {
-          'fees': 'rgb(148, 163, 184)',
-          'fees-hover': 'rgb(203, 213, 225)',
-          'personal': 'rgb(244, 114, 182)',
-          'personal-hover': 'rgb(249, 168, 212)',
-          'software': 'rgb(232, 121, 249)',
-          'software-hover': 'rgb(240, 171, 252)',
-          'health': 'rgb(167, 139, 250)',
-          'health-hover': 'rgb(196, 181, 253)',
-          'entertainment': 'rgb(96, 165, 250)',
-          'entertainment-hover': 'rgb(147, 197, 253)',
-          'auto': 'rgb(34, 211, 238)',
-          'auto-hover': 'rgb(103, 232, 249)',
-          'food': 'rgb(52, 211, 153)',
-          'food-hover': 'rgb(110, 231, 183)',
-          'george': 'rgb(163, 230, 53)',
-          'george-hover': 'rgb(190, 242, 100)',
-          'home': 'rgb(250, 204, 21)',
-          'home-hover': 'rgb(253, 224, 71)',
-          'utilities': 'rgb(251, 146, 60)',
-          'utilities-hover': 'rgb(253, 186, 116)',
-          'mortgage': 'rgb(248, 113, 113)',
-          'mortgage-hover': 'rgb(252, 165, 165)'
-        },
-        // Tailwind Default Colors
+        ...tokenConfig.colors,
+        // Tailwind Default Colors (keep for utility purposes)
         slate: {
           50: '#f8fafc',
           100: '#f1f5f9',
@@ -483,54 +330,17 @@ module.exports = {
           950: '#4c0519'
         }
       },
+      // Merge token-based border radius from Figma
       borderRadius: {
-        'none': '0',
-        'sm': '2px',
-        DEFAULT: '4px',
-        'md': '6px',
-        'lg': '8px',
-        'xl': '12px',
-        '2xl': '16px',
-        '3xl': '24px',
-        '4xl': '32px',
+        ...tokenConfig.borderRadius,
+        // Keep full for circular elements
         'full': '9999px'
       },
+      // Merge token-based spacing from Figma
       spacing: {
-        '0': '0',
-        'px': '1px',
-        '0.5': '2px',
-        '1': '4px',
-        '1.5': '6px',
-        '2': '8px',
-        '2.5': '10px',
-        '3': '12px',
-        '3.5': '14px',
-        '4': '16px',
-        '5': '20px',
-        '6': '24px',
-        '7': '28px',
-        '8': '32px',
-        '9': '36px',
-        '10': '40px',
-        '11': '44px',
-        '12': '48px',
-        '14': '56px',
-        '16': '64px',
-        '20': '80px',
-        '24': '96px',
-        '28': '112px',
-        '32': '128px',
-        '36': '144px',
-        '40': '160px',
-        '44': '176px',
-        '48': '192px',
-        '52': '208px',
-        '56': '224px',
-        '60': '240px',
-        '64': '256px',
-        '72': '288px',
-        '80': '320px',
-        '96': '384px'
+        ...tokenConfig.spacing,
+        // Keep px for 1px borders
+        'px': '1px'
       },
       width: {
         '112': '448px',
