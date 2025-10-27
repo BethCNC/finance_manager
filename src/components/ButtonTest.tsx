@@ -1,5 +1,5 @@
 import React from 'react';
-import {ChevronRight, Plus, Eye, X} from 'lucide-react';
+import {ChevronRight, Plus, Eye} from 'lucide-react';
 import Button from './Button';
 
 const ButtonTest: React.FC = () => {

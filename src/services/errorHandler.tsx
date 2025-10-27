@@ -1,4 +1,6 @@
 // Comprehensive error handling and retry logic service
+import React from 'react';
+
 interface ErrorInfo {
   message: string;
   stack?: string;
@@ -393,7 +395,7 @@ export class ErrorBoundary extends React.Component<
     errorHandler.handleError({
       message: error.message,
       stack: error.stack,
-      componentStack: errorInfo.componentStack,
+      componentStack: errorInfo.componentStack || undefined,
       errorBoundary: 'ErrorBoundary',
       severity: 'high',
       category: 'system'

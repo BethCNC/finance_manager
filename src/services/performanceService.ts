@@ -63,8 +63,9 @@ class PerformanceService {
         const entries = list.getEntries();
         entries.forEach((entry) => {
           if (entry.entryType === 'navigation') {
-            this.metrics.loadTime = entry.loadEventEnd - entry.loadEventStart;
-            this.metrics.renderTime = entry.domContentLoadedEventEnd - entry.domContentLoadedEventStart;
+            const navEntry = entry as PerformanceNavigationTiming;
+            this.metrics.loadTime = navEntry.loadEventEnd - navEntry.loadEventStart;
+            this.metrics.renderTime = navEntry.domContentLoadedEventEnd - navEntry.domContentLoadedEventStart;
           }
         });
       });
@@ -82,8 +83,9 @@ class PerformanceService {
         let cachedResources = 0;
 
         entries.forEach((entry) => {
-          if (entry.transferSize) {
-            totalSize += entry.transferSize;
+          const resourceEntry = entry as PerformanceResourceTiming;
+          if (resourceEntry.transferSize) {
+            totalSize += resourceEntry.transferSize;
           } else {
             cachedResources++;
           }
