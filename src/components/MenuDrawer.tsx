@@ -1,4 +1,4 @@
-import {X, User, Bell, Shield, CreditCard, HelpCircle, LogOut, ChevronRight} from 'lucide-react';
+import {X, User, Bell, Shield, CreditCard, HelpCircle, LogOut, ChevronRight, FileText, Target, Settings} from 'lucide-react';
 import {Link} from 'react-router-dom';
 
 interface MenuDrawerProps {
@@ -14,16 +14,17 @@ export default function MenuDrawer({isOpen, onClose}: MenuDrawerProps) {
       title: 'Account',
       items: [
         {icon: User, label: 'Profile Settings', href: '/settings'},
-        {icon: Bell, label: 'Notifications', href: '/settings'},
+        {icon: Bell, label: 'Notifications', href: '/notifications'},
         {icon: Shield, label: 'Privacy & Security', href: '/settings'},
       ],
     },
     {
       title: 'Financial',
       items: [
-        {icon: CreditCard, label: 'Connected Accounts', href: '/settings'},
+        {icon: CreditCard, label: 'Connected Accounts', href: '/accounts'},
         {icon: CreditCard, label: 'Subscriptions', href: '/subscriptions'},
-        {icon: CreditCard, label: 'Bills', href: '/bills'},
+        {icon: Target, label: 'Goals', href: '/goals'},
+        {icon: FileText, label: 'Reports', href: '/reports'},
       ],
     },
     {

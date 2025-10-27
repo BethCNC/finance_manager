@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import {Home, Layers, CreditCard, TrendingUp, Map} from 'lucide-react';
+import {Home, Layers, CreditCard, Target, Map} from 'lucide-react';
 
 /**
  * Bottom Navigation Component
@@ -15,12 +15,12 @@ import {Home, Layers, CreditCard, TrendingUp, Map} from 'lucide-react';
 export default function BottomNav() {
   const location = useLocation();
 
-  // Main 5 navigation items (Dashboard, Accounts, Transactions, Cash Flow, Budget)
+  // Main 5 navigation items (Dashboard, Accounts, Transactions, Goals, Budget)
   const mainNavItems = [
     {icon: Home, label: 'Dashboard', href: '/'},
     {icon: Layers, label: 'Accounts', href: '/accounts'},
     {icon: CreditCard, label: 'Transactions', href: '/transactions'},
-    {icon: TrendingUp, label: 'Cash Flow', href: '/advisor'},
+    {icon: Target, label: 'Goals', href: '/goals'},
     {icon: Map, label: 'Budget', href: '/budget'},
   ];
 

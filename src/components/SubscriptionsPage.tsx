@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useFinanceData} from '../hooks/useFinanceData';
 import {MobileHeader} from './MobileHeader';
 import BottomNav from './BottomNav';
+import SubscriptionManager from './SubscriptionManager';
 import {ChevronDown} from 'lucide-react';
 
 interface Subscription {
@@ -100,6 +101,9 @@ const SubscriptionsPage: React.FC = () => {
           </select>
           <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={20} />
         </div>
+
+        {/* Enhanced Subscription Manager */}
+        <SubscriptionManager />
 
         {/* Subscription Summary Card */}
         <div className="bg-fuchsia-400 rounded-2xl p-6 text-white space-y-3">

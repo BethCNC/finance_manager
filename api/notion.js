@@ -227,6 +227,165 @@ module.exports = async (req, res) => {
       });
     }
 
+    // Handle POST requests for creating transactions
+    if (req.method === 'POST' && type === 'create_transaction') {
+      const {description, amount, date, type: transactionType, category, account, person, business, subscription, notes} = req.body;
+
+      // Validate required fields
+      if (!description || !amount || !date || !transactionType || !category) {
+        return res.status(400).json({
+          error: 'Missing required fields',
+          required: ['description', 'amount', 'date', 'type', 'category'],
+          received: {description, amount, date, type: transactionType, category}
+        });
+      }
+
+      try {
+        const response = await notion.pages.create({
+          parent: {database_id: TRANSACTIONS_DB},
+          properties: {
+            Description: {
+              title: [{text: {content: description}}]
+            },
+            Amount: {
+              number: parseFloat(amount)
+            },
+            Date: {
+              date: {start: date}
+            },
+            Type: {
+              select: {name: transactionType}
+            },
+            Category: {
+              select: {name: category}
+            },
+            Account: account ? {
+              select: {name: account}
+            } : undefined,
+            Who: person ? {
+              select: {name: person}
+            } : undefined,
+            Business: business ? {
+              checkbox: business
+            } : undefined,
+            Subscription: subscription ? {
+              checkbox: subscription
+            } : undefined,
+            Notes: notes ? {
+              rich_text: [{text: {content: notes}}]
+            } : undefined
+          }
+        });
+
+        return res.status(201).json({
+          success: true,
+          transaction: {
+            id: response.id,
+            description,
+            amount: parseFloat(amount),
+            date,
+            type: transactionType,
+            category,
+            account,
+            person,
+            business,
+            subscription,
+            notes
+          }
+        });
+      } catch (error) {
+        console.error('Error creating transaction:', error);
+        return res.status(500).json({
+          error: 'Failed to create transaction',
+          details: error.message
+        });
+      }
+    }
+
+    // Handle PATCH requests for updating transactions
+    if (req.method === 'PATCH' && type === 'update_transaction') {
+      const {id, description, amount, date, type: transactionType, category, account, person, business, subscription, notes} = req.body;
+
+      if (!id) {
+        return res.status(400).json({
+          error: 'Transaction ID is required for updates'
+        });
+      }
+
+      try {
+        const updateProperties = {};
+        
+        if (description) updateProperties.Description = {title: [{text: {content: description}}]};
+        if (amount !== undefined) updateProperties.Amount = {number: parseFloat(amount)};
+        if (date) updateProperties.Date = {date: {start: date}};
+        if (transactionType) updateProperties.Type = {select: {name: transactionType}};
+        if (category) updateProperties.Category = {select: {name: category}};
+        if (account) updateProperties.Account = {select: {name: account}};
+        if (person) updateProperties.Who = {select: {name: person}};
+        if (business !== undefined) updateProperties.Business = {checkbox: business};
+        if (subscription !== undefined) updateProperties.Subscription = {checkbox: subscription};
+        if (notes !== undefined) updateProperties.Notes = {rich_text: [{text: {content: notes}}]};
+
+        const response = await notion.pages.update({
+          page_id: id,
+          properties: updateProperties
+        });
+
+        return res.status(200).json({
+          success: true,
+          transaction: {
+            id: response.id,
+            description,
+            amount: parseFloat(amount),
+            date,
+            type: transactionType,
+            category,
+            account,
+            person,
+            business,
+            subscription,
+            notes
+          }
+        });
+      } catch (error) {
+        console.error('Error updating transaction:', error);
+        return res.status(500).json({
+          error: 'Failed to update transaction',
+          details: error.message
+        });
+      }
+    }
+
+    // Handle DELETE requests for deleting transactions
+    if (req.method === 'DELETE' && type === 'delete_transaction') {
+      const {id} = req.query;
+
+      if (!id) {
+        return res.status(400).json({
+          error: 'Transaction ID is required for deletion'
+        });
+      }
+
+      try {
+        // Archive the page (soft delete)
+        await notion.pages.update({
+          page_id: id,
+          archived: true
+        });
+
+        return res.status(200).json({
+          success: true,
+          message: 'Transaction deleted successfully'
+        });
+      } catch (error) {
+        console.error('Error deleting transaction:', error);
+        return res.status(500).json({
+          error: 'Failed to delete transaction',
+          details: error.message
+        });
+      }
+    }
+
     return res.status(400).json({error: 'Invalid type parameter. Use ?type=transactions, ?type=summary, ?type=budget, or ?type=debug'});
   } catch (error) {
     console.error('Notion API error:', error);

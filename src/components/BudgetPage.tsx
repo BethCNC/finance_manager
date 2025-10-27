@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useFinanceData} from '../hooks/useFinanceData';
 import {MobileHeader} from './MobileHeader';
 import BottomNav from './BottomNav';
+import BudgetOptimizer from './BudgetOptimizer';
 import {ChevronDown, AlertCircle} from 'lucide-react';
 
 interface AlertItem {
@@ -174,6 +175,9 @@ const BudgetPage = () => {
             </div>
           </div>
         </div>
+
+        {/* Budget Optimizer */}
+        <BudgetOptimizer />
 
         {/* Budget Alerts */}
         <div className="space-y-3">

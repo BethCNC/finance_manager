@@ -6,10 +6,13 @@ import DashboardPage from './components/DashboardPage';
 import {BudgetScreen} from './components/BudgetScreen';
 import BudgetPage from './components/BudgetPage';
 import AccountsScreen from './components/AccountsScreen';
-import EnhancedAccountsScreen from './components/EnhancedAccountsScreen';
+import AccountsPage from './components/AccountsPage';
 import TransactionsPage from './components/TransactionsPage';
-import AdvisorPage from './components/AdvisorPage';
+import AIAdvisorPage from './components/AIAdvisorPage';
 import SubscriptionsPage from './components/SubscriptionsPage';
+import GoalsPage from './components/GoalsPage';
+import ReportsPageWrapper from './components/ReportsPageWrapper';
+import NotificationsPage from './components/NotificationsPage';
 import MonthlyBillsPage from './components/MonthlyBillsPage';
 import {AIDataProcessor} from './components/AIDataProcessor';
 import BottomNav from './components/BottomNav';
@@ -69,7 +72,11 @@ function App() {
         {/* Accounts */}
         <Route
           path="/accounts"
-          element={<EnhancedAccountsScreen />}
+          element={
+            <AppLayout>
+              <AccountsPage />
+            </AppLayout>
+          }
         />
         {/* Transactions */}
         <Route
@@ -79,7 +86,11 @@ function App() {
         {/* Advisor */}
         <Route
           path="/advisor"
-          element={<AdvisorPage />}
+          element={
+            <AppLayout>
+              <AIAdvisorPage />
+            </AppLayout>
+          }
         />
         {/* Budget */}
         <Route
@@ -99,6 +110,33 @@ function App() {
         <Route
           path="/subscriptions"
           element={<SubscriptionsPage />}
+        />
+        {/* Goals */}
+        <Route
+          path="/goals"
+          element={
+            <AppLayout>
+              <GoalsPage />
+            </AppLayout>
+          }
+        />
+        {/* Reports */}
+        <Route
+          path="/reports"
+          element={
+            <AppLayout>
+              <ReportsPageWrapper />
+            </AppLayout>
+          }
+        />
+        {/* Notifications */}
+        <Route
+          path="/notifications"
+          element={
+            <AppLayout>
+              <NotificationsPage />
+            </AppLayout>
+          }
         />
         {/* Monthly Bills */}
         <Route

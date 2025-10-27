@@ -171,7 +171,7 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Sync to Notion (batch import)
+    // Sync to Notion (batch import with duplicate detection and category mapping)
     if (action === 'sync_to_notion') {
       const {Client} = require('@notionhq/client');
       const notion = new Client({auth: process.env.NOTION_API_KEY});
@@ -203,14 +203,106 @@ module.exports = async (req, res) => {
         transactions = transactions.filter((tx) => tx.account_id === account_filter);
       }
 
+      // Get existing transactions from Notion to check for duplicates
+      const existingTransactionsResponse = await notion.databases.query({
+        database_id: transactionsDbId,
+        filter: {
+          and: [
+            {property: 'Date', date: {on_or_after: startDate}},
+            {property: 'Date', date: {on_or_before: endDate}},
+          ],
+        },
+      });
+
+      // Create a set of existing transaction signatures for duplicate detection
+      const existingSignatures = new Set();
+      existingTransactionsResponse.results.forEach((page) => {
+        const amount = page.properties.Amount?.number || 0;
+        const date = page.properties.Date?.date?.start || '';
+        const description = page.properties.Description?.title?.[0]?.plain_text || '';
+        
+        // Create signature: date + amount + first 20 chars of description
+        const signature = `${date}_${amount}_${description.substring(0, 20)}`;
+        existingSignatures.add(signature);
+      });
+
+      // Category mapping from Plaid categories to our 22 categories
+      const categoryMapping = {
+        'Food and Drink': 'Food & Groceries',
+        'Shops': 'Shopping',
+        'Transportation': 'Transportation',
+        'Entertainment': 'Entertainment',
+        'Recreation': 'Entertainment',
+        'Gas Stations': 'Transportation',
+        'Groceries': 'Food & Groceries',
+        'Restaurants': 'Food & Groceries',
+        'Healthcare': 'Healthcare',
+        'Medical': 'Healthcare',
+        'Education': 'Education',
+        'Travel': 'Travel',
+        'Hotels': 'Travel',
+        'Airlines': 'Travel',
+        'Personal Care': 'Personal Care',
+        'General Merchandise': 'Shopping',
+        'Clothing': 'Shopping',
+        'Electronics': 'Shopping',
+        'Home Improvement': 'Home & Utilities',
+        'Utilities': 'Home & Utilities',
+        'Insurance': 'Insurance',
+        'Taxes': 'Taxes',
+        'Investments': 'Investments',
+        'Savings': 'Savings',
+        'Debt Payment': 'Debt Payment',
+        'Business Services': 'Business Expenses',
+        'Software': 'Software & Subscriptions',
+        'Subscriptions': 'Software & Subscriptions',
+        'Family': 'Family',
+        'Transfer': 'Transfer Fee',
+        'Income': 'Income',
+        'Other': 'Other',
+        'Uncategorized': 'Uncategorized'
+      };
+
+      // Auto-assign person based on account (you can customize this logic)
+      const getPersonFromAccount = (accountId) => {
+        // This is a simple mapping - you can enhance this based on your account setup
+        if (accountId.includes('beth') || accountId.includes('personal')) return 'Beth';
+        if (accountId.includes('bryan') || accountId.includes('business')) return 'Bryan';
+        return 'Beth'; // Default
+      };
+
       // Create Notion pages for each transaction
       const created = [];
+      const skipped = [];
       const errors = [];
 
       for (const tx of transactions) {
         try {
+          // Create signature for duplicate detection
+          const signature = `${tx.date}_${Math.abs(tx.amount)}_${(tx.merchant_name || tx.name || '').substring(0, 20)}`;
+          
+          // Skip if duplicate
+          if (existingSignatures.has(signature)) {
+            skipped.push(tx.transaction_id);
+            continue;
+          }
+
           // Map Plaid transaction to Notion properties
           const isCredit = tx.amount < 0; // Plaid: negative = money in, positive = money out
+          const plaidCategory = tx.category && tx.category[0] ? tx.category[0] : 'Uncategorized';
+          const mappedCategory = categoryMapping[plaidCategory] || 'Uncategorized';
+
+          // Detect if it's likely a subscription
+          const subscriptionKeywords = ['netflix', 'spotify', 'amazon prime', 'adobe', 'microsoft', 'apple', 'google', 'dropbox', 'slack', 'zoom'];
+          const isSubscription = subscriptionKeywords.some(keyword => 
+            (tx.merchant_name || tx.name || '').toLowerCase().includes(keyword)
+          );
+
+          // Detect if it's likely a business expense
+          const businessKeywords = ['office', 'business', 'corporate', 'work', 'professional'];
+          const isBusiness = businessKeywords.some(keyword => 
+            (tx.merchant_name || tx.name || '').toLowerCase().includes(keyword)
+          );
 
           await notion.pages.create({
             parent: {database_id: transactionsDbId},
@@ -239,15 +331,25 @@ module.exports = async (req, res) => {
               },
               Category: {
                 select: {
-                  name: tx.category && tx.category[0] ? tx.category[0] : 'Uncategorized',
+                  name: mappedCategory,
                 },
               },
-              // Optional: Add account info if you have an Account property
-              // Account: {
-              //   select: {
-              //     name: 'Plaid Import',
-              //   },
-              // },
+              Account: {
+                select: {
+                  name: 'Plaid Import',
+                },
+              },
+              Who: {
+                select: {
+                  name: getPersonFromAccount(tx.account_id),
+                },
+              },
+              Business: {
+                checkbox: isBusiness,
+              },
+              Subscription: {
+                checkbox: isSubscription,
+              },
             },
           });
 
@@ -264,9 +366,16 @@ module.exports = async (req, res) => {
       return res.status(200).json({
         success: true,
         created: created.length,
+        skipped: skipped.length,
         errors: errors.length,
         errorDetails: errors,
         period: {startDate, endDate},
+        summary: {
+          total: transactions.length,
+          new: created.length,
+          duplicates: skipped.length,
+          failed: errors.length
+        }
       });
     }
 
@@ -283,3 +392,4 @@ module.exports = async (req, res) => {
     });
   }
 };
+

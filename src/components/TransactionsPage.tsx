@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {useFinanceData} from '../hooks/useFinanceData';
+import {useSwipeGesture, usePullToRefresh, useLongPress} from '../hooks/useMobileGestures';
 import {MobileHeader} from './MobileHeader';
 import BottomNav from './BottomNav';
-import {TrendingUp, TrendingDown, Check} from 'lucide-react';
+import TransactionForm from './TransactionForm';
+import TransactionEditModal from './TransactionEditModal';
+import {TrendingUp, TrendingDown, Check, Plus, MoreVertical, CheckSquare, Square, Trash2, Tag, RefreshCw} from 'lucide-react';
 
 interface Transaction {
   id: string;
@@ -48,6 +51,120 @@ const TransactionsPage = () => {
   const [activeTab, setActiveTab] = useState('beth');
   const [activeCategoryFilter, setActiveCategoryFilter] = useState('label');
   const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
+  const [isTransactionFormOpen, setIsTransactionFormOpen] = useState(false);
+  const [editingTransaction, setEditingTransaction] = useState<any>(null);
+  const [selectedTransactions, setSelectedTransactions] = useState<Set<string>>(new Set());
+  const [isBulkMode, setIsBulkMode] = useState(false);
+  const [isBulkDeleting, setIsBulkDeleting] = useState(false);
+  const [swipedTransaction, setSwipedTransaction] = useState<string | null>(null);
+
+  // Mobile gestures
+  const swipeGesture = useSwipeGesture({
+    onSwipeLeft: (transactionId) => {
+      if (transactionId && !isBulkMode) {
+        // Show delete confirmation for swiped transaction
+        const confirmed = window.confirm('Delete this transaction?');
+        if (confirmed) {
+          handleDeleteTransaction(transactionId);
+        }
+      }
+    },
+    onSwipeRight: (transactionId) => {
+      if (transactionId && !isBulkMode) {
+        // Mark as reviewed or toggle business flag
+        handleToggleBusinessFlag(transactionId);
+      }
+    }
+  });
+
+  const pullToRefresh = usePullToRefresh({
+    onRefresh: async () => {
+      // Refresh transactions data
+      window.location.reload();
+    }
+  });
+
+  const longPress = useLongPress(() => {
+    if (!isBulkMode) {
+      setIsBulkMode(true);
+    }
+  }, 500);
+
+  // Bulk operations functions
+  const toggleTransactionSelection = (transactionId: string) => {
+    const newSelected = new Set(selectedTransactions);
+    if (newSelected.has(transactionId)) {
+      newSelected.delete(transactionId);
+    } else {
+      newSelected.add(transactionId);
+    }
+    setSelectedTransactions(newSelected);
+  };
+
+  const selectAllTransactions = () => {
+    const allIds = new Set(filteredTransactions.map(t => t.id));
+    setSelectedTransactions(allIds);
+  };
+
+  const clearSelection = () => {
+    setSelectedTransactions(new Set());
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedTransactions.size === 0) return;
+    
+    const confirmed = window.confirm(`Are you sure you want to delete ${selectedTransactions.size} transactions? This action cannot be undone.`);
+    if (!confirmed) return;
+
+    setIsBulkDeleting(true);
+    
+    try {
+      const deletePromises = Array.from(selectedTransactions).map(id =>
+        fetch(`/api/notion?type=delete_transaction&id=${id}`, { method: 'DELETE' })
+      );
+      
+      await Promise.all(deletePromises);
+      
+      // Refresh data
+      window.location.reload();
+    } catch (error) {
+      alert('Failed to delete some transactions. Please try again.');
+    } finally {
+      setIsBulkDeleting(false);
+    }
+  };
+
+  const handleBulkCategorize = (category: string) => {
+    if (selectedTransactions.size === 0) return;
+    
+    const confirmed = window.confirm(`Are you sure you want to categorize ${selectedTransactions.size} transactions as "${category}"?`);
+    if (!confirmed) return;
+
+    // TODO: Implement bulk categorize API endpoint
+    alert('Bulk categorize feature coming soon!');
+  };
+
+  // Mobile gesture helper functions
+  const handleDeleteTransaction = async (transactionId: string) => {
+    try {
+      const response = await fetch(`/api/notion?type=delete_transaction&id=${transactionId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        alert('Failed to delete transaction');
+      }
+    } catch (error) {
+      alert('Network error. Please try again.');
+    }
+  };
+
+  const handleToggleBusinessFlag = async (transactionId: string) => {
+    // TODO: Implement toggle business flag API endpoint
+    alert('Toggle business flag feature coming soon!');
+  };
 
   // Tabs
   const tabs: Tab[] = [
@@ -252,7 +369,52 @@ const TransactionsPage = () => {
   return (
     <div className="bg-slate-50 min-h-screen flex flex-col">
       {/* Mobile Header */}
-      <MobileHeader title="Transactions" showMenu showGrid onGridClick={handleGridClick} />
+      <MobileHeader title="Transactions" showMenu showGrid onGridClick={() => setIsBulkMode(!isBulkMode)} />
+
+      {/* Bulk Actions Bar */}
+      {isBulkMode && (
+        <div className="bg-blue-50 border-b border-blue-200 p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={selectAllTransactions}
+                className="text-sm text-blue-600 hover:text-blue-800"
+              >
+                Select All
+              </button>
+              <button
+                onClick={clearSelection}
+                className="text-sm text-blue-600 hover:text-blue-800"
+              >
+                Clear
+              </button>
+              <span className="text-sm text-blue-700">
+                {selectedTransactions.size} selected
+              </span>
+            </div>
+            
+            {selectedTransactions.size > 0 && (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleBulkCategorize('Food & Groceries')}
+                  className="flex items-center gap-1 px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-sm hover:bg-blue-200 transition-colors"
+                >
+                  <Tag className="w-4 h-4" />
+                  Categorize
+                </button>
+                <button
+                  onClick={handleBulkDelete}
+                  disabled={isBulkDeleting}
+                  className="flex items-center gap-1 px-3 py-1.5 bg-red-100 text-red-700 rounded-lg text-sm hover:bg-red-200 transition-colors disabled:opacity-50"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  {isBulkDeleting ? 'Deleting...' : 'Delete'}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <div className="flex-1 p-6 pb-24 space-y-6">
@@ -331,13 +493,53 @@ const TransactionsPage = () => {
           ))}
         </div>
 
+        {/* Pull to Refresh Indicator */}
+        {pullToRefresh.shouldShowRefreshIndicator && (
+          <div className="flex items-center justify-center py-4">
+            <div className="flex items-center gap-2 text-gray-500">
+              <RefreshCw className={`w-5 h-5 ${pullToRefresh.isRefreshing ? 'animate-spin' : ''}`} />
+              <span className="text-sm">
+                {pullToRefresh.isRefreshing ? 'Refreshing...' : 'Pull to refresh'}
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* Transaction List */}
-        <div className="space-y-3">
+        <div 
+          ref={pullToRefresh.ref}
+          className="space-y-3"
+          {...pullToRefresh}
+          {...longPress}
+        >
           {filteredTransactions.map((transaction) => (
             <div
               key={transaction.id}
-              className="bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3"
+              className={`bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 transition-transform ${
+                swipedTransaction === transaction.id ? 'scale-95' : ''
+              }`}
+              {...useSwipeGesture({
+                onSwipeLeft: () => handleDeleteTransaction(transaction.id),
+                onSwipeRight: () => handleToggleBusinessFlag(transaction.id),
+                threshold: 50
+              })}
             >
+              {/* Bulk Selection Checkbox */}
+              {isBulkMode && (
+                <div className="flex-shrink-0">
+                  <button
+                    onClick={() => toggleTransactionSelection(transaction.id)}
+                    className="w-5 h-5 flex items-center justify-center"
+                  >
+                    {selectedTransactions.has(transaction.id) ? (
+                      <CheckSquare className="w-5 h-5 text-blue-600" />
+                    ) : (
+                      <Square className="w-5 h-5 text-gray-400 border border-gray-300 rounded" />
+                    )}
+                  </button>
+                </div>
+              )}
+
               {/* Merchant Icon */}
               <div className={`w-12 h-12 ${transaction.iconBg} rounded-full flex items-center justify-center flex-shrink-0`}>
                 <span className="text-white font-bold text-lg">
@@ -364,6 +566,23 @@ const TransactionsPage = () => {
                   {transaction.date}
                 </p>
               </div>
+
+              {/* Edit/Delete Actions - Only show when not in bulk mode */}
+              {!isBulkMode && (
+                <div className="flex-shrink-0">
+                  <TransactionEditModal
+                    transaction={transaction}
+                    onEdit={() => {
+                      // Refresh data after edit
+                      window.location.reload();
+                    }}
+                    onDelete={() => {
+                      // Refresh data after delete
+                      window.location.reload();
+                    }}
+                  />
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -381,6 +600,24 @@ const TransactionsPage = () => {
           </div>
         )}
       </div>
+
+      {/* Floating Action Button */}
+      <button
+        onClick={() => setIsTransactionFormOpen(true)}
+        className="fixed bottom-20 right-4 w-14 h-14 bg-black rounded-full flex items-center justify-center shadow-lg hover:bg-gray-800 transition-colors z-40"
+      >
+        <Plus className="w-6 h-6 text-white" />
+      </button>
+
+      {/* Transaction Form Modal */}
+      <TransactionForm
+        isOpen={isTransactionFormOpen}
+        onClose={() => setIsTransactionFormOpen(false)}
+        onSuccess={() => {
+          // Refresh data after successful creation
+          window.location.reload();
+        }}
+      />
 
       {/* Bottom Navigation */}
       <BottomNav />
